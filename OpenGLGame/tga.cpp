@@ -1,5 +1,7 @@
 // Based on public domain code by Antonio R. Fernandes <ajbrf@yahoo.com>
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #ifdef _WIN32
 #include <windows.h>
 #endif

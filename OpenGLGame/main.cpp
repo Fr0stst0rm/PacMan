@@ -183,7 +183,7 @@ void init(int width, int height)
 	tgaInfo *info = 0;
 	int mode;
 
-	info = tgaLoad("crate.tga");
+	info = tgaLoad((char*)"crate.tga");
 
 	if (info->status != TGA_OK) {
 		fprintf(stderr, "error loading texture image: %d\n", info->status);
