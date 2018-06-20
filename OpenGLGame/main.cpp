@@ -11,6 +11,7 @@
 //#include <string>
 //#include <iostream>
 //#include <fstream>
+#include <vector>
 
 #include "tga.h"
 
@@ -28,7 +29,7 @@ using namespace std;
 #define RAD(x) (((x)*M_PI)/180.)
 
 int window;
-float move = 0.0f;
+float movePlayer = 0.0f;
 GLuint texture;
 int animating = 1;
 
@@ -67,11 +68,11 @@ void specialKeyPressed(int key, int x, int y)
 	switch (key) {
 
 	case GLUT_KEY_UP:     /* <cursor up> */
-		move += 0.1f;
+		movePlayer += 0.1f;
 		glutPostRedisplay();
 		break;
 	case GLUT_KEY_DOWN:     /* <cursor down> */
-		move -= 0.1f;
+		movePlayer -= 0.1f;
 		glutPostRedisplay();
 		break;
 	}
@@ -142,7 +143,7 @@ void display()
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
-	glTranslatef(0, 0, -move);
+	glTranslatef(0, 0, -movePlayer);
 
 	glPushMatrix();
 	glTranslatef(-2, 0, 0);
@@ -183,41 +184,48 @@ void init(int width, int height)
 	tgaInfo *info = 0;
 	int mode;
 
-	info = tgaLoad((char*)"crate.tga");
+	/*std::vector<string> textures = {"cheese.tga", "crate.tga", "wall.tga"};
 
-	if (info->status != TGA_OK) {
-		fprintf(stderr, "error loading texture image: %d\n", info->status);
+	for (string textureName : textures) 
+	{*/
+		info = tgaLoad((char*)"wall.tga");
 
-		return;
-	}
-	if (info->width != info->height) {
-		fprintf(stderr, "Image size %d x %d is not rectangular, giving up.\n",
-			info->width, info->height);
-		return;
-	}
+		if (info->status != TGA_OK) {
+			fprintf(stderr, "error loading texture image: %d\n", info->status);
 
-	mode = info->pixelDepth / 8;  // will be 3 for rgb, 4 for rgba
-	glGenTextures(1, &texture);
+			return;
+		}
+		if (info->width != info->height) {
+			fprintf(stderr, "Image size %d x %d is not rectangular, giving up.\n",
+				info->width, info->height);
+			return;
+		}
 
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+		mode = info->pixelDepth / 8;  // will be 3 for rgb, 4 for rgba
+		glGenTextures(1, &texture);
 
-	// Upload the texture bitmap. 
-	w = info->width;
-	h = info->height;
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 
-	reportGLError("before uploading texture");
-	GLint format = (mode == 4) ? GL_RGBA : GL_RGB;
-	glTexImage2D(GL_TEXTURE_2D, 0, format, w, h, 0, format,
-		GL_UNSIGNED_BYTE, info->imageData);
-	reportGLError("after uploading texture");
+		// Upload the texture bitmap. 
+		w = info->width;
+		h = info->height;
 
-	tgaDestroy(info);
+		reportGLError("before uploading texture");
+		GLint format = (mode == 4) ? GL_RGBA : GL_RGB;
+		glTexImage2D(GL_TEXTURE_2D, 0, format, w, h, 0, format,
+			GL_UNSIGNED_BYTE, info->imageData);
+		reportGLError("after uploading texture");
+
+		tgaDestroy(info);
+	//}
+
+	
 }
 
 void timer(int value)
@@ -271,7 +279,7 @@ void mouseMotion(int x, int y) {
 
 int main(int argc, char **argv)
 {
-	hideConsole();
+	//hideConsole();
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
@@ -286,7 +294,7 @@ int main(int argc, char **argv)
 	glutTimerFunc(15, timer, 1);
 	glutMouseFunc(mouse);
 	glutMotionFunc(mouseMotion);
-	glutFullScreen();
+	//glutFullScreen();
 	glutMainLoop();
 	return 0;
 }
