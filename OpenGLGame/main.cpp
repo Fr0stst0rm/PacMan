@@ -218,7 +218,6 @@ void init(int width, int height)
 	reportGLError("after uploading texture");
 
 	tgaDestroy(info);
-
 }
 
 void timer(int value)
