@@ -34,7 +34,7 @@ int begin_y = 0;      /* y value of mouse movement */
 GLfloat angle_y = 0;  /* angle of spin around y axis of scene, in degrees */
 GLfloat angle_x = 0;  /* angle of spin around x axis  of scene, in degrees */
 
-//Game Test
+					  //Game Test
 Wall * wall1;
 Wall * wall2;
 Wall * wall3;
@@ -100,7 +100,7 @@ void display()
 	glLoadIdentity();
 
 	gluLookAt(-sinf(RAD(angle_y)), sinf(RAD(angle_x)), cosf(RAD(angle_y)), 0., 0., 0., 0., 1., 0.);
-	
+
 	glTranslatef(0, 0, -movePlayer);
 
 	wall1->setPos(-2, 0, -4);
