@@ -1,6 +1,6 @@
 #include "map.h"
 
-Map::Map()
+Map::Map() : x(0), y(0), z(0)
 {
 }
 
@@ -19,7 +19,7 @@ char Map::getWidth()
 	return width;
 }
 
-void Map::loadMap(char height, char width, char ** map)
+void Map::loadMap(char width, char height, char * map)
 {
 	this->height = height;
 	this->width = width;
@@ -28,11 +28,12 @@ void Map::loadMap(char height, char width, char ** map)
 
 	walls = new Wall[width*height];
 
-	for (int x = 0; x < width; x++) {
-		for (int y = 0; y < height; y++) {
-			if (map[x][y] == WALL) {
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			if (map[xyToIndex(x, y, width)] == WALL) {
 				walls[xyToIndex(x, y, width)] = Wall();
-				walls[xyToIndex(x, y, width)].setPos(x,0,y);
+				walls[xyToIndex(x, y, width)].setPos(x + this->x, (height - 1) - (y + this->y), this->z);
+				walls[xyToIndex(x, y, width)].setTexture("wall.tga");
 			}
 			else {
 				walls[xyToIndex(x, y, width)] = NULL;
@@ -64,7 +65,7 @@ bool Map::checkNextDir(int x, int y, Direction dir)
 	}
 
 	if ((tempX >= 0) && (tempX < width) && (tempY >= 0) && (tempY < height)) {
-		if (map[tempX][tempY] == PATH) {
+		if (map[xyToIndex(x, y, width)] == PATH) {
 			return true;
 		}
 	}
@@ -74,12 +75,21 @@ bool Map::checkNextDir(int x, int y, Direction dir)
 
 void Map::draw()
 {
-	for (int x = 0; x < width; x++) {
-		for (int y = 0; y < height; y++) {
-			if (map[x][y] == WALL) {
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			if (map[xyToIndex(x, y, width)] == WALL) {
+				walls[xyToIndex(x, y, width)].setScale(size);
+				walls[xyToIndex(x, y, width)].setPos(x + this->x, (height - 1) - (y + this->y), this->z);
 				walls[xyToIndex(x, y, width)].draw();
 			}
 		}
 	}
+}
+
+void Map::setPos(float x, float y, float z)
+{
+	this->x = x;
+	this->y = -y;
+	this->z = z;
 }
 

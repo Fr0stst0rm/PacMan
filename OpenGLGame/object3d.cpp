@@ -42,16 +42,14 @@ void Object3D::setTexture(std::string path)
 	w = info->width;
 	h = info->height;
 
-	std::cout << "before uploading texture";
 	GLint format = (mode == 4) ? GL_RGBA : GL_RGB;
 	glTexImage2D(GL_TEXTURE_2D, 0, format, w, h, 0, format,
 		GL_UNSIGNED_BYTE, info->imageData);
-	std::cout << "after uploading texture";
 
 	tgaDestroy(info);
 }
 
-void Object3D::setPos(int x, int y, int z)
+void Object3D::setPos(float x, float y, float z)
 {
 	this->x = x;
 	this->y = y;

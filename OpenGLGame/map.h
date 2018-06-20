@@ -3,6 +3,7 @@
 #define _MAP_H
 
 #include "wall.h"
+#include <stdio.h>
 
 #define xyToIndex(x,y, maxX) ( (y * maxX) + x)
 
@@ -29,20 +30,24 @@ public:
 	char getHeight();
 	char getWidth();
 	
-	void loadMap(char height, char width, char ** map);
+	void loadMap(char width,  char height, char * map);
 
 	bool checkNextDir(int x, int y, Direction dir);
 
 	void draw();
 
+	void setPos(float x, float y, float z);
+
 private:
+	float size = 0.5f;
+	float x, y, z;
 
 	Wall * walls;
 
 	char height = 0;
 	char width = 0;
 
-	char ** map;
+	char * map;
 
 };
 

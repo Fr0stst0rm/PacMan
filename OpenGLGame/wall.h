@@ -8,8 +8,10 @@ class Wall : public Object3D
 {
 public:
 	Wall();
-	Wall(double size);
+	Wall(float size);
 	~Wall();
+
+	void setScale(float size);
 
 protected:
 
@@ -18,7 +20,7 @@ protected:
 private:
 	void drawCube();
 
-	double size;
+	float size;
 };
 
 #endif // !WALL_H

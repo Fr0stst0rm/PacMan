@@ -22,7 +22,7 @@ public:
 
 	void setTexture(std::string path);
 
-	void setPos(int x, int y, int z);
+	void setPos(float x, float y, float z);
 
 	void draw();
 
@@ -36,7 +36,7 @@ private:
 
 	GLuint texture;
 
-	int x, y, z;
+	float x, y, z;
 
 };
 
