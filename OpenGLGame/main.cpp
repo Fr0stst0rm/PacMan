@@ -10,6 +10,9 @@
 #include <math.h>
 #include "map.h"
 #include "wall.h"
+#include <iostream>
+
+#define PLAYTHEME false
 
 void glutLeaveMainLoop();
 void hideConsole();
@@ -24,11 +27,10 @@ using namespace std;
 #define RAD(x) (((x)*M_PI)/180.)
 
 int window;
-float movePlayer = 0.0f;
+float moveManPacY = 0.0f;
+float moveManPacX = 2.0f;
 
 int animating = 1;
-
-float moving = 0;     /* flag that is true while mouse moves */
 
 Wall * wall1;
 Wall * wall2;
@@ -60,6 +62,29 @@ void resize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 }
 
+void specialKeyPressed(int key, int x, int y)
+{
+	switch (key) 
+	{
+		case GLUT_KEY_UP:
+			moveManPacY += 0.1f;
+			glutPostRedisplay();
+			break;
+
+		case GLUT_KEY_DOWN:
+			moveManPacY -= 0.1f;
+			glutPostRedisplay();
+			break;
+
+		case GLUT_KEY_LEFT:
+			moveManPacX -= 0.1f;
+			glutPostRedisplay();
+			break;
+		case GLUT_KEY_RIGHT:
+			moveManPacX += 0.1f;
+	}
+}
+
 void keyPressed(unsigned char key, int x, int y)
 {
 	switch (key) {
@@ -81,7 +106,7 @@ void display()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	wall1->setPos(-2, -movePlayer, -10);
+	wall1->setPos(moveManPacX, moveManPacY, -10);
 	wall1->draw();
 
 	wall2->setPos(0, 0, -10);
@@ -128,10 +153,13 @@ void timer(int value)
 	glutTimerFunc(15, timer, 1);
 }
 
-
 int main(int argc, char **argv)
 {
 	hideConsole();
+
+	if (PLAYTHEME) {
+		PlaySound("manpac.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+	}
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
@@ -141,6 +169,7 @@ int main(int argc, char **argv)
 	glutDisplayFunc(&display);
 	glutReshapeFunc(&resize);
 	glutKeyboardFunc(&keyPressed);
+	glutSpecialFunc(&specialKeyPressed);
 	init(640, 480);
 	glutTimerFunc(15, timer, 1);
 	//glutFullScreen();

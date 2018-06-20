@@ -51,7 +51,7 @@ void Object3D::setTexture(std::string path)
 	tgaDestroy(info);
 }
 
-void Object3D::setPos(int x, int y, int z)
+void Object3D::setPos(float x, float y, float z)
 {
 	this->x = x;
 	this->y = y;
