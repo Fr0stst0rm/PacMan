@@ -1,17 +1,21 @@
 #pragma once
 
-#ifndef PAC_MAN_H
-#define PAC_MAN_H
+#ifndef _MAN_PAC_H
+#define _MAN_PAC_H
 
+#include "object3d.h"
 #include "map.h"
 
-class PacMan
+class ManPac : public Object3D
 {
 public:
-	PacMan(Map map);
-	~PacMan();
+	ManPac(Map map);
 
 	void moveToNextTile(Direction dir);
+
+protected:
+
+	void createMesh();
 
 private:
 
@@ -25,4 +29,4 @@ private:
 };
 
 
-#endif // !PAC_MAN_H
+#endif // !_MAN_PAC_H

@@ -1,14 +1,10 @@
-#include "PacMan.h"
+#include "manpac.h"
 
-PacMan::PacMan(Map map) : map(map)
+ManPac::ManPac(Map map) : map(map)
 {
 }
 
-PacMan::~PacMan()
-{
-}
-
-void PacMan::moveToNextTile(Direction dir)
+void ManPac::moveToNextTile(Direction dir)
 {
 	
 	if (map.checkNextDir(x,y,dir)) {
@@ -29,4 +25,8 @@ void PacMan::moveToNextTile(Direction dir)
 
 
 	}
+}
+
+void ManPac::createMesh()
+{
 }

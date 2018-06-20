@@ -1,21 +1,17 @@
-/*
-*  Basic OpenGL lighting example with single light source.
-*/
+
 #include <Windows.h>
 #include <GL/glut.h> 
 #include <GL/gl.h>  
 #include <GL/glu.h>  
 
 #include <stdio.h>
-#include <stdlib.h> // for exit
-//#include <string>
-//#include <iostream>
-//#include <fstream>
-
-#include "tga.h"
+#include <stdlib.h>
 
 #include <math.h>
 
+#include "wall.h"
+
+void glutLeaveMainLoop();
 void hideConsole();
 
 using namespace std;
@@ -28,8 +24,8 @@ using namespace std;
 #define RAD(x) (((x)*M_PI)/180.)
 
 int window;
-float move = 0.0f;
-GLuint texture;
+float movePlayer = 0.0f;
+
 int animating = 1;
 
 int moving = 0;     /* flag that is true while mouse moves */
@@ -37,6 +33,11 @@ int begin_x = 0;        /* x value of mouse movement */
 int begin_y = 0;      /* y value of mouse movement */
 GLfloat angle_y = 0;  /* angle of spin around y axis of scene, in degrees */
 GLfloat angle_x = 0;  /* angle of spin around x axis  of scene, in degrees */
+
+//Game Test
+Wall * wall1;
+Wall * wall2;
+Wall * wall3;
 
 void reportGLError(const char * msg)
 {
@@ -67,11 +68,11 @@ void specialKeyPressed(int key, int x, int y)
 	switch (key) {
 
 	case GLUT_KEY_UP:     /* <cursor up> */
-		move += 0.1f;
+		movePlayer += 0.1f;
 		glutPostRedisplay();
 		break;
 	case GLUT_KEY_DOWN:     /* <cursor down> */
-		move -= 0.1f;
+		movePlayer -= 0.1f;
 		glutPostRedisplay();
 		break;
 	}
@@ -93,78 +94,23 @@ void keyPressed(unsigned char key, int x, int y)
 	}
 }
 
-void drawCube()
-{
-	glBegin(GL_QUADS);
-	// front face
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 1.0f);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, -1.0f, 1.0f);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
-	// back face
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, -1.0f);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, -1.0f, -1.0f);
-	// top face
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, 1.0f, 1.0f);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, -1.0f);
-	// bottom face
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, -1.0f, -1.0f);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, -1.0f, 1.0f);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 1.0f);
-	// right face
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, -1.0f, -1.0f);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, -1.0f);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, -1.0f, 1.0f);
-	// left face
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 1.0f);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f);
-	glEnd();
-}
-
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	gluLookAt(-sinf(RAD(angle_y)), sinf(RAD(angle_x)), cosf(RAD(angle_y)),
-		0., 0., 0.,
-		0., 1., 0.);
+	gluLookAt(-sinf(RAD(angle_y)), sinf(RAD(angle_x)), cosf(RAD(angle_y)), 0., 0., 0., 0., 1., 0.);
+	
+	glTranslatef(0, 0, -movePlayer);
 
-	glEnable(GL_TEXTURE_2D);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	wall1->setPos(-2, 0, -4);
+	wall1->draw();
 
-	glTranslatef(0, 0, -move);
+	wall2->setPos(0, 0, -4);
+	wall2->draw();
 
-	glPushMatrix();
-	glTranslatef(-2, 0, 0);
-	glTranslatef(0, 0, 4);
-	drawCube();
-	glTranslatef(0, 0, -4);
-	drawCube();
-	glTranslatef(0, 0, -4);
-	drawCube();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslatef(2, 0, 0);
-	glTranslatef(0, 0, 4);
-	drawCube();
-	glTranslatef(0, 0, -4);
-	drawCube();
-	glTranslatef(0, 0, -4);
-	drawCube();
-	glPopMatrix();
-
-	glDisable(GL_TEXTURE_2D);
+	wall3->setPos(2, 0, -4);
+	wall3->draw();
 
 	glutSwapBuffers();
 }
@@ -179,45 +125,14 @@ void init(int width, int height)
 
 	resize(width, height);
 
-	GLsizei w, h;
-	tgaInfo *info = 0;
-	int mode;
+	wall1 = new Wall(1.1f);
+	wall1->setTexture("crate.tga");
 
-	info = tgaLoad((char*)"crate.tga");
+	wall2 = new Wall(1.2);
+	wall2->setTexture("cheese.tga");
 
-	if (info->status != TGA_OK) {
-		fprintf(stderr, "error loading texture image: %d\n", info->status);
-
-		return;
-	}
-	if (info->width != info->height) {
-		fprintf(stderr, "Image size %d x %d is not rectangular, giving up.\n",
-			info->width, info->height);
-		return;
-	}
-
-	mode = info->pixelDepth / 8;  // will be 3 for rgb, 4 for rgba
-	glGenTextures(1, &texture);
-
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-
-	// Upload the texture bitmap. 
-	w = info->width;
-	h = info->height;
-
-	reportGLError("before uploading texture");
-	GLint format = (mode == 4) ? GL_RGBA : GL_RGB;
-	glTexImage2D(GL_TEXTURE_2D, 0, format, w, h, 0, format,
-		GL_UNSIGNED_BYTE, info->imageData);
-	reportGLError("after uploading texture");
-
-	tgaDestroy(info);
+	wall3 = new Wall(1.3);
+	wall3->setTexture("elf.tga");
 
 }
 
@@ -278,7 +193,7 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
 	glutInitWindowSize(640, 480);
 	glutInitWindowPosition(0, 0);
-	window = glutCreateWindow("foo");
+	window = glutCreateWindow("MacPan");
 	glutDisplayFunc(&display);
 	glutReshapeFunc(&resize);
 	glutKeyboardFunc(&keyPressed);
@@ -287,12 +202,21 @@ int main(int argc, char **argv)
 	glutTimerFunc(15, timer, 1);
 	glutMouseFunc(mouse);
 	glutMotionFunc(mouseMotion);
-	glutFullScreen();
+	//glutFullScreen();
 	glutMainLoop();
+	glutLeaveMainLoop();
 	return 0;
 }
 
 void hideConsole()
 {
 	::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+}
+
+void glutLeaveMainLoop() {
+	cout << "Freeing memory";
+
+	delete wall1;
+	delete wall2;
+	delete wall3;
 }
