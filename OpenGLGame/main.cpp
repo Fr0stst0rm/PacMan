@@ -30,7 +30,7 @@ using namespace std;
 
 int window;
 float moveManPacY = 0.0f;
-float moveManPacX = 2.0f;
+float moveManPacX = 0.0f;
 
 int animating = 1;
 
@@ -106,7 +106,6 @@ void display()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	map->setPos(moveManPacX, moveManPacY, zoom);
 	map->draw();
 	
 	glutSwapBuffers();
@@ -125,6 +124,7 @@ void init(int width, int height)
 
 	map = new Map();
 	map->loadMap(Level1::width, Level1::height, (char *) Level1::map);
+	map->setPos(-Level1::width/2.0f + 0.5f, -Level1::height/2.0f+0.5f, zoom);
 
 }
 
