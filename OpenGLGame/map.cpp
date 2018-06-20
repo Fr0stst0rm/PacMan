@@ -1,11 +1,12 @@
 #include "map.h"
 
-Map::Map(char height, char width) : height(height), width(width)
+Map::Map()
 {
 }
 
 Map::~Map()
 {
+	delete walls;
 }
 
 char Map::getHeight()
@@ -18,8 +19,26 @@ char Map::getWidth()
 	return width;
 }
 
-void Map::loadMap(char ** map)
+void Map::loadMap(char height, char width, char ** map)
 {
+	this->height = height;
+	this->width = width;
+
+	int wallCount = 0;
+
+	walls = new Wall[width*height];
+
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			if (map[x][y] == WALL) {
+				walls[xyToIndex(x, y, width)] = Wall();
+			}
+			else {
+				walls[xyToIndex(x, y, width)] = NULL;
+			}
+		}
+	}
+
 	this->map = map;
 }
 
@@ -50,5 +69,16 @@ bool Map::checkNextDir(int x, int y, Direction dir)
 	}
 
 	return false;
+}
+
+void Map::draw()
+{
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			if (map[x][y] == WALL) {
+				walls[xyToIndex(x, y, width)].draw();
+			}
+		}
+	}
 }
 

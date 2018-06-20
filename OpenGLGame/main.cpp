@@ -125,13 +125,13 @@ void init(int width, int height)
 
 	resize(width, height);
 
-	wall1 = new Wall(1.1f);
+	wall1 = new Wall(1);
 	wall1->setTexture("crate.tga");
 
-	wall2 = new Wall(1.2);
+	wall2 = new Wall(1);
 	wall2->setTexture("cheese.tga");
 
-	wall3 = new Wall(1.3);
+	wall3 = new Wall(1);
 	wall3->setTexture("elf.tga");
 
 }

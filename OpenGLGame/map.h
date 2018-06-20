@@ -2,6 +2,10 @@
 #ifndef _MAP_H
 #define _MAP_H
 
+#include "wall.h"
+
+#define xyToIndex(x,y, maxX) ( (y * maxX) + x)
+
 enum Direction
 {
 	NORTH,
@@ -19,17 +23,21 @@ enum MapTiles
 class Map
 {
 public:
-	Map(char height, char width);
+	Map();
 	~Map();
 
 	char getHeight();
 	char getWidth();
 	
-	void loadMap(char ** map);
+	void loadMap(char height, char width, char ** map);
 
 	bool checkNextDir(int x, int y, Direction dir);
 
+	void draw();
+
 private:
+
+	Wall * walls;
 
 	char height = 0;
 	char width = 0;

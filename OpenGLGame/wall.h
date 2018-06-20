@@ -7,6 +7,7 @@
 class Wall : public Object3D
 {
 public:
+	Wall();
 	Wall(double size);
 	~Wall();
 

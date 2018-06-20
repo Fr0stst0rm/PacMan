@@ -1,5 +1,9 @@
 #include "wall.h"
 
+Wall::Wall() : size(1)
+{
+}
+
 Wall::Wall(double size) : size(size)
 {
 }
