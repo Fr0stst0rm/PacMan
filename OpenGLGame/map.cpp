@@ -32,6 +32,7 @@ void Map::loadMap(char height, char width, char ** map)
 		for (int y = 0; y < height; y++) {
 			if (map[x][y] == WALL) {
 				walls[xyToIndex(x, y, width)] = Wall();
+				walls[xyToIndex(x, y, width)].setPos(x,0,y);
 			}
 			else {
 				walls[xyToIndex(x, y, width)] = NULL;
