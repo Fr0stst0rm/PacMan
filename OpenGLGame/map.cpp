@@ -26,8 +26,8 @@ void Map::loadMap(char width, char height, char * map)
 
 	int wallCount = 0;
 
-	walls = new Wall * [width*height];
-	pickupCubes = new PickupCube * [width*height];
+	walls = new Wall *[width*height];
+	pickupCubes = new PickupCube *[width*height];
 
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
@@ -75,8 +75,8 @@ bool Map::checkNextDir(int x, int y, Direction dir)
 	}
 
 	if ((tempX >= 0) && (tempX < width) && (tempY >= 0) && (tempY < height)) {
-		//std::cout << "X: " << tempX << " Y: " << tempY << " => " << (int)(map[xyToIndex(tempX, (height - 1) - tempY, width)]);
-		if (map[xyToIndex(tempX, (height - 1) - tempY, width)] == PATH) {
+		//std::cout << "X: " << tempX << " Y: " << tempY << " => " << (int)(map[xyToIndex(tempX, (height - 1) - tempY, width)]) << "\n";
+		if (map[xyToIndex(tempX, (height - 1) - tempY, width)] != WALL) {
 			return true;
 		}
 	}

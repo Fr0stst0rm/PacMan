@@ -1,3 +1,3 @@
 #include "defines.h"
 
-bool MODE_2D = true;
+bool MODE_2D = false;

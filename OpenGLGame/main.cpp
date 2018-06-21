@@ -119,6 +119,7 @@ void keyPressed(unsigned char key, int x, int y)
 
 void endAnimation() {
 
+
 	glPushMatrix();
 	GLfloat mat_diffuse[] = { 1.0f,1.0f,0.0f }; //material (gelb)
 	GLfloat mat_shininess[] = { 1.0f };
@@ -130,6 +131,7 @@ void endAnimation() {
 	glutSolidSphere(3.0f, 200, 160);
 	glPopMatrix();
 
+	//eyes
 	glPushMatrix();
 	GLfloat mat_diffuse2[] = { 1.0f,0.0f,0.0f }; //material (rot)
 	GLfloat mat_shininess2[] = { 1.0f };
@@ -152,6 +154,7 @@ void endAnimation() {
 	glutSolidSphere(0.5f, 200, 160);
 	glPopMatrix();
 
+	//licht
 	GLfloat light_position[] = { lightx, lighty, lightz, 0.0f };
 	GLfloat light_diffuse[] = { 1.0f, 1.0f, 1.0f, 0.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
@@ -160,13 +163,13 @@ void endAnimation() {
 	glEnable(GL_LIGHTING); //light aktivieren
 	glEnable(GL_LIGHT0); // licht nummer eins einschalten
 
+	//lichtberechnungen
 	lightx = cos(lightAngle) * 5;
 	lightz = sin(lightAngle) * 5;
 
 	lightAngle += 0.05;
 
 	if (lightAngle >= 18.0f) {
-		std::cout << "Hello";
 		glutDestroyWindow(window);
 		exitMain();
 	}
@@ -196,6 +199,7 @@ void display()
 void init(int width, int height)
 {
 	if (!ende) {
+		//light
 		GLfloat mat_diffuse[] = { 1.0f,1.0f,0.0f }; //material (gelb)
 		GLfloat mat_shininess[] = { 1.0f };
 		glMaterialfv(GL_FRONT, GL_SPECULAR, mat_diffuse);
@@ -221,10 +225,11 @@ void init(int width, int height)
 
 	map = new Map();
 	map->loadMap(Level1::width, Level1::height, (char *)Level1::map);
+
+	//Set map to center of screen
 	map->setPos(-Level1::width / 2.0f + 0.5f, -Level1::height / 2.0f + 0.5f, zoom);
 
-	manPac = new ManPac(1,1,map);
-	//manPac->setPos(-(map->getWidth() / 6.0f + (float)(1) * 1.5f), -(map->getHeight() / 7.0f + (float)(1) * 1.5f), map->getZoom());
+	manPac = new ManPac(9,9,map);
 }
 
 void timer(int value)
@@ -272,24 +277,20 @@ void exitMain() {
 void moveUp() {
 	manPac->moveToNextTile(NORTH);
 	manPac->setZRotation(90);
-	//glutPostRedisplay();
 }
 
 void moveDown() {
 	manPac->moveToNextTile(SOUTH);
 	manPac->setZRotation(-90);
-	//glutPostRedisplay();
 }
 
 void moveLeft() {
 	manPac->moveToNextTile(EAST);
 	manPac->setZRotation(180);
-	//glutPostRedisplay();
 }
 
 void moveRight() {
 	manPac->moveToNextTile(WEST);
 	manPac->setZRotation(0);
-	//glutPostRedisplay();
 }
 
