@@ -4,19 +4,19 @@
 #define _PICK_UP_CUBE_H
 
 #include "object3d.h"
-#include "map.h"
 #include "defines.h"
 
 class PickupCube : public Object3D
 {
 public:
-	PickupCube(int x, int y, Map * map);
+	PickupCube();
+	~PickupCube();
 
 protected:
 	void createMesh();
 
 private:
-	Map * map;
+
 };
 
 

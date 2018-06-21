@@ -2,6 +2,7 @@
 #ifndef _MAP_H
 #define _MAP_H
 
+#include "pickupcube.h"
 #include "wall.h"
 #include <stdio.h>
 
@@ -48,12 +49,12 @@ private:
 	float x, y, z;
 
 	Wall * walls;
+	PickupCube * pickupCubes;
 
 	char height = 0;
 	char width = 0;
 
 	char * map;
-
 };
 
 #endif // !_MAP_H
