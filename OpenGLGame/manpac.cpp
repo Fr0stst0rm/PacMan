@@ -24,13 +24,13 @@ void ManPac::moveToNextTile(Direction dir)
 				nextY = 1;
 				break;
 			case EAST:
-				nextX = 1;
+				nextX = -1;
 				break;
 			case SOUTH:
 				nextY = -1;
 				break;
 			case WEST:
-				nextX = -1;
+				nextX = 1;
 				break;
 			}
 			oldX = currentX;
@@ -135,7 +135,7 @@ void ManPac::moveToNextPos()
 			nextY = 0;
 			oldX = currentX;
 			oldY = currentY;
-			std::cout << "X:" << currentX << " Y:" << currentY;
+			std::cout << "X:" << currentX << " Y:" << currentY << "\n";
 			isMoving = false;
 		}
 	}

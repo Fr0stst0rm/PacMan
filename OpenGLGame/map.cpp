@@ -54,13 +54,13 @@ bool Map::checkNextDir(int x, int y, Direction dir)
 		tempY++;
 		break;
 	case EAST:
-		tempX++;
+		tempX--;
 		break;
 	case SOUTH:
 		tempY--;
 		break;
 	case WEST:
-		tempX--;
+		tempX++;
 		break;
 	}
 

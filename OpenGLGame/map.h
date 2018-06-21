@@ -18,7 +18,9 @@ enum Direction
 enum MapTiles
 {
 	PATH = 0,
-	WALL = 1
+	WALL = 1,
+	PILL = 2,
+	PORTAL = 3
 };
 
 class Map

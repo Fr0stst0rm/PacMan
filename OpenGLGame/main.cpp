@@ -202,20 +202,24 @@ void exitMain() {
 
 void moveUp() {
 	manPac->moveToNextTile(NORTH);
+	manPac->setZRotation(-90);
 	//glutPostRedisplay();
 }
 
 void moveDown() {
 	manPac->moveToNextTile(SOUTH);
+	manPac->setZRotation(-90);
 	//glutPostRedisplay();
 }
 
 void moveLeft() {
 	manPac->moveToNextTile(EAST);
+	manPac->setZRotation(0);
 	//glutPostRedisplay();
 }
 
 void moveRight() {
 	manPac->moveToNextTile(WEST);
+	manPac->setZRotation(180);
 	//glutPostRedisplay();
 }
