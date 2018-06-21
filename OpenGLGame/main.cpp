@@ -145,7 +145,7 @@ int main(int argc, char **argv)
 	//hideConsole();
 
 	if (PLAYTHEME) {
-		PlaySound((LPCWSTR)"manpac.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+		PlaySound((LPCSTR)"manpac.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 	}
 
 	glutInit(&argc, argv);
