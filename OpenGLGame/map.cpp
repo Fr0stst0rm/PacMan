@@ -93,3 +93,8 @@ void Map::setPos(float x, float y, float z)
 	this->z = z;
 }
 
+float Map::getZoom()
+{
+	return z;
+}
+

@@ -11,8 +11,6 @@ public:
 	Wall(float size);
 	~Wall();
 
-	void setScale(float size);
-
 protected:
 
 	void createMesh();
@@ -20,7 +18,6 @@ protected:
 private:
 	void drawCube();
 
-	float size;
 };
 
 #endif // !WALL_H

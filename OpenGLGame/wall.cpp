@@ -1,25 +1,19 @@
 #include "wall.h"
 
-Wall::Wall() : size(1)
+Wall::Wall()
 {
 }
 
-Wall::Wall(float size) : size(size)
+Wall::Wall(float size)
 {
+	this->size = size;
 }
 
 Wall::~Wall()
 {
 }
 
-void Wall::setScale(float size)
-{
-	this->size = size;
-}
-
 void Wall::createMesh() {
-	
-	glScalef(size, size, size);
 	drawCube();
 }
 

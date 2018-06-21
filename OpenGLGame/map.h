@@ -38,6 +38,9 @@ public:
 
 	void setPos(float x, float y, float z);
 
+
+	float getZoom();
+
 private:
 	float size = 0.5f;
 	float x, y, z;

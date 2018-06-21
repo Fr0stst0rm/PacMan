@@ -9,9 +9,15 @@
 class ManPac : public Object3D
 {
 public:
-	ManPac(Map * map);
+	ManPac(int x, int y, Map * map);
 
 	void moveToNextTile(Direction dir);
+
+	float movementSpeed = 0.1f;
+
+	bool isMoving = false;
+
+	void moveToNextPos();
 
 protected:
 
@@ -19,10 +25,17 @@ protected:
 
 private:
 
+	int mouthMover = 15;
+
+	GLfloat manPacRadius = 0.4f;
+
 	Map * map;
 
-	float x = 0;
-	float y = 0;
+	float nextX = 0;
+	float nextY = 0;
+
+	float currentX = 0;
+	float currentY = 0;
 
 	Direction currentDir = NORTH;
 
