@@ -16,7 +16,7 @@
 #include "pickupcube.h"
 #include "defines.h"
 
-#define PLAYTHEME false
+#define PLAYTHEME true
 
 void endAnimation();
 void exitMain();
@@ -85,7 +85,20 @@ void keyPressed(unsigned char key, int x, int y)
 		if (ende) {
 			exitMain();
 		}
+		PlaySound(TEXT("gameover.wav"), NULL, SND_FILENAME | SND_ASYNC);
 		ende = true;
+
+		MODE_2D = false;
+
+		zoom = -27;
+
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		gluPerspective(45.0f, (float)win_width / (float)win_height, 0.1f, 500.0f);
+		glMatrixMode(GL_MODELVIEW);
+		map->setPos(-Level1::width / 2.0f + 0.5f, -Level1::height / 2.0f + 0.5f, zoom);
+		manPac->resetPos();
+
 		break;
 	case 'w':
 		moveUp();
@@ -131,7 +144,7 @@ void keyPressed(unsigned char key, int x, int y)
 
 void endAnimation() {
 
-
+	
 	glPushMatrix();
 	GLfloat mat_diffuse[] = { 1.0f,1.0f,0.0f }; //material (gelb)
 	GLfloat mat_shininess[] = { 1.0f };
@@ -273,10 +286,10 @@ void timer(int value)
 
 int main(int argc, char **argv)
 {
-	//hideConsole();
+	hideConsole();
 
 	if (PLAYTHEME) {
-		PlaySound(L"manpac.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+		PlaySound(TEXT("manpac.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 	}
 
 	glutInit(&argc, argv);
