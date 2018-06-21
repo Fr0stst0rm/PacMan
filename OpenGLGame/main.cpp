@@ -12,6 +12,7 @@
 #include "map.h"
 #include "wall.h"
 #include "level1.h"
+#include "pickupcube.h"
 
 
 #define PLAYTHEME false
@@ -34,6 +35,11 @@ int zoom = -27;
 
 Map * map;
 ManPac * manPac;
+
+// ###################################################
+// DELETE TEST VARIABLES
+PickupCube * testCube;
+// ###################################################
 
 void reportGLError(const char * msg)
 {
@@ -109,6 +115,7 @@ void display()
 
 	manPac->draw();
 	map->draw();
+	testCube->draw();
 
 	glutSwapBuffers();
 }
@@ -123,7 +130,7 @@ void init(int width, int height)
 
 	resize(width, height);
 
-
+	
 	map = new Map();
 	map->loadMap(Level1::width, Level1::height, (char *)Level1::map);
 	map->setPos(-Level1::width / 2.0f + 0.5f, -Level1::height / 2.0f + 0.5f, zoom);
@@ -131,6 +138,11 @@ void init(int width, int height)
 	manPac = new ManPac(1,1,map);
 	//manPac->setPos(-(map->getWidth() / 6.0f + (float)(1) * 1.5f), -(map->getHeight() / 7.0f + (float)(1) * 1.5f), map->getZoom());
 
+	// #########################################################
+	// TEST VARIABLES, DELETE LATER ON
+	testCube = new PickupCube(0, 0, map);
+	//testCube->setScale(0.9f);
+	// #########################################################
 }
 
 void timer(int value)
