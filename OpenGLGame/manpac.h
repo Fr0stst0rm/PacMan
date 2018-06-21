@@ -31,7 +31,6 @@ protected:
 	void createMesh();
 
 private:
-
 	int mouthMover = 15;
 
 	GLfloat manPacRadius = 0.4f;

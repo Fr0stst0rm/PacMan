@@ -43,6 +43,9 @@ int zoom = -27;
 Map * map;
 ManPac * manPac;
 
+int const win_width = 480;
+int const win_height = 640;
+
 void reportGLError(const char * msg)
 {
 	GLenum errCode;
@@ -193,10 +196,26 @@ void display()
 		
 	}
 
-	//glRasterPos2i(200, 100);
-	//glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-	//glScalef(0.005, 0.005, 1);
-	//glutStrokeString(GLUT_STROKE_ROMAN, (unsigned char*)"The game over!");
+
+	//gluOrtho2D(0.0, win_width, 0.0, win_height);
+	//glMatrixMode(GL_MODELVIEW);
+	//glPushMatrix();
+	//glColor3f(1.0f, 0.0f, 0.0f);//needs to be called before RasterPos
+	//glRasterPos2i(10, 10);
+	//std::string s = "Some text";
+	//void * font = GLUT_BITMAP_9_BY_15;
+
+	//for (std::string::iterator i = s.begin(); i != s.end(); ++i)
+	//{
+	//	char c = *i;
+	//	//this does nothing, color is fixed for Bitmaps when calling glRasterPos
+	//	//glColor3f(1.0, 0.0, 1.0); 
+	//	glutBitmapCharacter(font, c);
+	//}
+	//glMatrixMode(GL_MODELVIEW);
+	//glPopMatrix();
+	//glMatrixMode(GL_PROJECTION);
+	//glPopMatrix();
 
 	glutSwapBuffers();
 }
@@ -260,7 +279,7 @@ int main(int argc, char **argv)
 	glutReshapeFunc(&resize);
 	glutKeyboardFunc(&keyPressed);
 	glutSpecialFunc(&specialKeyPressed);
-	init(640, 480);
+	init(win_height, win_width);
 	glutTimerFunc(15, timer, 1);
 	//glutFullScreen();
 	glutMainLoop();
