@@ -44,15 +44,13 @@ void ManPac::createMesh()
 {
 	glColor3f(1.0f, 1.0f, 0.0f);
 
-	float zCoord = 1.0f;
-
 	glBegin(GL_TRIANGLE_FAN);
-	glVertex3f(0.0f, 0.0f, zCoord); // center point
+	glVertex3f(0.0f, 0.0f, 0.0f); // center point
 	int numberOfSegments = 100;
 	GLfloat angle;
 
 	if (mouthMover >= 0) {
-		for (int i = 0; i <= numberOfSegments - mouthMover; i++) {
+		for (int i = mouthMover; i <= numberOfSegments - mouthMover; i++) {
 
 			angle = i * 2.0f * M_PI / numberOfSegments;
 			glVertex2f(cos(angle) * manPacRadius, sin(angle) * manPacRadius);
@@ -67,7 +65,7 @@ void ManPac::createMesh()
 
 	}
 	else {
-		for (int i = 0; i <= numberOfSegments + mouthMover; i++) {
+		for (int i = mouthMover; i <= numberOfSegments + mouthMover; i++) {
 
 			angle = i * 2.0f * M_PI / numberOfSegments;
 			glVertex2f(cos(angle) * manPacRadius, sin(angle) * manPacRadius);
