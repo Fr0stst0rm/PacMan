@@ -40,8 +40,8 @@ bool ende = false;
 
 int zoom = -27;
 
-Map * map;
-ManPac * manPac;
+Map * map = NULL;
+ManPac * manPac = NULL;
 
 int const win_width = 480;
 int const win_height = 640;
@@ -282,7 +282,7 @@ int main(int argc, char **argv)
 	glutSpecialFunc(&specialKeyPressed);
 	init(win_height, win_width);
 	glutTimerFunc(15, timer, 1);
-	glutFullScreen();
+	//glutFullScreen();
 	glutMainLoop();
 	exitMain();
 	return 0;

@@ -13,7 +13,7 @@ public:
 
 	void moveToNextTile(Direction dir);
 
-	float movementSpeed = 0.05f;
+	float movementSpeed = 0.075f;
 
 	bool isMoving = false;
 
@@ -22,6 +22,9 @@ public:
 	float offset = 0.45f;
 
 	void setPos(float x, float y, float z);
+
+	int score = 0;
+
 
 protected:
 
@@ -32,7 +35,7 @@ private:
 
 	GLfloat manPacRadius = 0.4f;
 
-	Map * map;
+	Map * map = NULL;
 
 	float nextX = 0;
 	float nextY = 0;
@@ -44,6 +47,9 @@ private:
 	float oldY = 0;
 
 	Direction currentDir = NORTH;
+
+	void checkPortal();
+	void handlePill();
 
 };
 

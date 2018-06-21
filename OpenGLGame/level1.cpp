@@ -1,7 +1,7 @@
 #include "level1.h"
 
 
-const char Level1::map[Level1::width *Level1::height] =
+char Level1::map[Level1::width *Level1::height] =
 {
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,1,

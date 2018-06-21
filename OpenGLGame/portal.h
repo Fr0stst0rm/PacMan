@@ -8,11 +8,13 @@
 class Portal
 {
 public:
-	Portal();
+	Portal(int x, int y);
 	~Portal();
 
 	int x = 0;
 	int y = 0;
+
+	Portal * counterpart = NULL;
 
 protected:
 private:

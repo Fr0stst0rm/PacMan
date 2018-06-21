@@ -7,7 +7,7 @@ struct  Level1 {
 	static const char width = 19;
 	static const char height = 21;
 
-	static const char map[];
+	static char map[];
 };
 
 #endif // !LEVEL_1_H

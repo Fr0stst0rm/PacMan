@@ -35,6 +35,9 @@ void ManPac::moveToNextTile(Direction dir)
 			}
 			oldX = currentX;
 			oldY = currentY;
+
+			std::cout << "Score: " << score << "\n";
+
 			isMoving = true;
 		}
 	}
@@ -82,6 +85,32 @@ void ManPac::createMesh()
 	glEnd();
 }
 
+void ManPac::handlePill()
+{
+	PickupCube * p;
+	if ((p = map->eatPill(currentX, currentY)) != NULL) {
+		score += p->scorePoints;
+		delete p;
+	}
+}
+
+void ManPac::checkPortal()
+{
+	Portal * p;
+	if ((p = map->getPortal(currentX, currentY)) != NULL) {
+		if ((p = p->counterpart) != NULL) {
+			currentX = p->x;
+			currentY = p->y;
+			oldX = currentX;
+			oldY = currentY;
+
+			std::cout << "Setting to X: " << currentX << " Y: " << currentY << "\n";
+
+			setPos(currentX, currentY, map->getZoom());
+		}
+	}
+}
+
 void ManPac::setPos(float x, float y, float z)
 {
 	Object3D::setPos(-(map->getWidth() / 2.0f) + (float)(x) * 1.0f + offset, -(map->getHeight() / 2.0f) + (float)(y) * 1.0f + offset, z);
@@ -120,7 +149,7 @@ void ManPac::moveToNextPos()
 			}
 		}
 		else if (nextY < 0) {
-			if (currentY >(oldY + nextY)) {
+			if (currentY > (oldY + nextY)) {
 				currentY -= movementSpeed;
 			}
 			else {
@@ -135,6 +164,11 @@ void ManPac::moveToNextPos()
 			nextY = 0;
 			oldX = currentX;
 			oldY = currentY;
+
+			handlePill();
+
+			checkPortal();
+
 			std::cout << "X:" << currentX << " Y:" << currentY << "\n";
 			isMoving = false;
 		}
