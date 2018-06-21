@@ -48,8 +48,8 @@ private:
 	float size = 0.5f;
 	float x, y, z;
 
-	Wall * walls;
-	PickupCube * pickupCubes;
+	Wall ** walls;
+	PickupCube ** pickupCubes;
 
 	char height = 0;
 	char width = 0;
