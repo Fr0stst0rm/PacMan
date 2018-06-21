@@ -23,6 +23,9 @@ public:
 
 	void setPos(float x, float y, float z);
 
+	int score = 0;
+
+
 protected:
 
 	void createMesh();
@@ -45,6 +48,9 @@ private:
 	float oldY = 0;
 
 	Direction currentDir = NORTH;
+
+	void checkPortal();
+	void handlePill();
 
 };
 

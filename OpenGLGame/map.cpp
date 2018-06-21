@@ -6,7 +6,18 @@ Map::Map() : x(0), y(0), z(0)
 
 Map::~Map()
 {
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+
+			delete walls[xyToIndex(x, y, width)];
+			delete pickupCubes[xyToIndex(x, y, width)];
+			delete portals[xyToIndex(x, y, width)];
+		}
+	}
+
 	delete walls;
+	delete pickupCubes;
+	delete portals;
 }
 
 char Map::getHeight()
@@ -28,26 +39,48 @@ void Map::loadMap(char width, char height, char * map)
 
 	walls = new Wall *[width*height];
 	pickupCubes = new PickupCube *[width*height];
+	portals = new Portal *[width*height];
+
+	Portal * portal1 = NULL;
+	Portal * portal2 = NULL;
 
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			if (map[xyToIndex(x, y, width)] == WALL) {
+
+			walls[xyToIndex(x, y, width)] = NULL;
+			pickupCubes[xyToIndex(x, y, width)] = NULL;
+			portals[xyToIndex(x, y, width)] = NULL;
+
+			switch (map[xyToIndex(x, y, width)]) {
+			case WALL:
 				walls[xyToIndex(x, y, width)] = new Wall();
 				walls[xyToIndex(x, y, width)]->setPos(x + this->x, (height - 1) - (y + this->y), this->z);
 				walls[xyToIndex(x, y, width)]->setTexture("wall.tga");
-			}
-			else {
-				walls[xyToIndex(x, y, width)] = NULL;
-			}
-
-			if (map[xyToIndex(x, y, width)] == PILL) {
+				break;
+			case PILL:
 				pickupCubes[xyToIndex(x, y, width)] = new PickupCube();
 				pickupCubes[xyToIndex(x, y, width)]->setPos(x + this->x, (height - 1) - (y + this->y), this->z);
-				
+				break;
+			case PORTAL:
+				portals[xyToIndex(x, y, width)] = new Portal(x, y);
+
+				if (portal1 == NULL) {
+					portal1 = portals[xyToIndex(x, y, width)];
+				}
+				else if (portal2 == NULL) {
+					portal2 = portals[xyToIndex(x, y, width)];
+				}
+				else {
+					portal1->counterpart = portal2;
+					portal2->counterpart = portal1;
+
+					portal1 = NULL;
+					portal2 = NULL;
+				}
+
+				break;
 			}
-			else {
-				pickupCubes[xyToIndex(x, y, width)] = NULL;
-			}
+
 		}
 	}
 
@@ -88,15 +121,20 @@ void Map::draw()
 {
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			if (map[xyToIndex(x, y, width)] == WALL) {
+			switch (map[xyToIndex(x, y, width)]) {
+			case WALL:
 				walls[xyToIndex(x, y, width)]->setScale(size);
 				walls[xyToIndex(x, y, width)]->setPos(x + this->x, (height - 1) - (y + this->y), this->z);
 				walls[xyToIndex(x, y, width)]->draw();
-			}
-
-			if (map[xyToIndex(x, y, width)] == PILL) {
-				pickupCubes[xyToIndex(x, y, width)]->setPos(x + this->x, (height - 1) - (y + this->y), this->z);
-				pickupCubes[xyToIndex(x, y, width)]->draw();
+				break;
+			case PILL:
+				if (pickupCubes[xyToIndex(x, y, width)] != NULL) {
+					pickupCubes[xyToIndex(x, y, width)]->setPos(x + this->x, (height - 1) - (y + this->y), this->z);
+					pickupCubes[xyToIndex(x, y, width)]->draw();
+				}
+				break;
+			case PORTAL:
+				break;
 			}
 		}
 	}
@@ -112,5 +150,18 @@ void Map::setPos(float x, float y, float z)
 float Map::getZoom()
 {
 	return z;
+}
+
+Portal * Map::getPortal(int x, int y)
+{
+	return portals[xyToIndex(x, (height - 1) - y, width)];
+}
+
+PickupCube * Map::eatPill(int x, int y)
+{
+	PickupCube * p = pickupCubes[xyToIndex(x, (height - 1) - y, width)];
+	map[xyToIndex(x, (height - 1) - y, width)] = 0;
+	pickupCubes[xyToIndex(x, (height - 1) - y, width)] = NULL;
+	return p;
 }
 

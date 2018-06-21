@@ -262,7 +262,7 @@ int main(int argc, char **argv)
 	glutSpecialFunc(&specialKeyPressed);
 	init(640, 480);
 	glutTimerFunc(15, timer, 1);
-	glutFullScreen();
+	//glutFullScreen();
 	glutMainLoop();
 	exitMain();
 	return 0;

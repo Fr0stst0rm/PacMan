@@ -45,6 +45,9 @@ public:
 
 	float getZoom();
 
+	Portal * getPortal(int x, int y);
+	PickupCube * eatPill(int x, int y);
+
 private:
 	float size = 0.5f;
 	float x, y, z;

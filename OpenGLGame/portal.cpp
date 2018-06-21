@@ -1,6 +1,6 @@
 #include "portal.h"
 
-Portal::Portal()
+Portal::Portal(int x, int y) : x(x), y(y)
 {
 }
 

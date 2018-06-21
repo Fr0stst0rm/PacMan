@@ -12,6 +12,8 @@ public:
 	PickupCube();
 	~PickupCube();
 
+	int scorePoints = 10;
+
 protected:
 	void createMesh();
 
