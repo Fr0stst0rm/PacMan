@@ -130,6 +130,22 @@ void display()
 
 void init(int width, int height)
 {
+	
+	GLfloat mat_diffuse[] = { 1.0f,1.0f,0.0f }; //material (gelb)
+	GLfloat mat_shininess[] = { 1.0f };
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_diffuse);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+	
+	GLfloat light_position[] = { 10.0f, 10.0f, 0.1f, 0.0f };
+	GLfloat light_diffuse[] = { 1.0f, 1.0f, 1.0f, 0.0f };
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+
+	glEnable(GL_LIGHTING); //light aktivieren
+	glEnable(GL_LIGHT0); // licht nummer eins einschalten
+
+
+
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClearDepth(1.0);
 	glDepthFunc(GL_LESS);
@@ -137,8 +153,13 @@ void init(int width, int height)
 	glShadeModel(GL_SMOOTH);
 
 	resize(width, height);
+<<<<<<< HEAD
+	
+
+=======
 
 	
+>>>>>>> 37461296890b22364fbebb91e9ce4b0f0473814c
 	map = new Map();
 	map->loadMap(Level1::width, Level1::height, (char *)Level1::map);
 	map->setPos(-Level1::width / 2.0f + 0.5f, -Level1::height / 2.0f + 0.5f, zoom);
