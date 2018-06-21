@@ -27,6 +27,7 @@ void Map::loadMap(char width, char height, char * map)
 	int wallCount = 0;
 
 	walls = new Wall[width*height];
+	pickupCubes = new PickupCube[width*height];
 
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
@@ -38,6 +39,16 @@ void Map::loadMap(char width, char height, char * map)
 			else {
 				walls[xyToIndex(x, y, width)] = NULL;
 			}
+
+			if (map[xyToIndex(x, y, width)] == PILL) {
+				pickupCubes[xyToIndex(x, y, width)] = PickupCube();
+				pickupCubes[xyToIndex(x, y, width)].setPos(x + this->x, (height - 1) - (y + this->y), this->z);
+				pickupCubes[xyToIndex(x, y, width)].setTexture("wall.tga");
+			}
+			else {
+				pickupCubes[xyToIndex(x, y, width)] = NULL;
+			}
+
 		}
 	}
 

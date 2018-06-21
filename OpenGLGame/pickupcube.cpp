@@ -1,8 +1,13 @@
 #include "pickupcube.h"
 
-PickupCube::PickupCube(int x, int y, Map * map) : map(map)
+PickupCube::PickupCube()
 {
-	setPos(- (map->getWidth()/ 6.0f + (float)(x) * 1.5f), - (map->getHeight() / 7.0f + (float)(y) * 1.5f), map->getZoom());
+
+}
+
+PickupCube::~PickupCube() 
+{
+
 }
 
 void PickupCube::createMesh()
