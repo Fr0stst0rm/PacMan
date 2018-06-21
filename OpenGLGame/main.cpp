@@ -94,7 +94,7 @@ void keyPressed(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 27:
-		ende = true;
+		ende = true; //starts endAnimation
 		
 		break;
 	case 'w':
@@ -122,6 +122,7 @@ void keyPressed(unsigned char key, int x, int y)
 
 void endAnimation() {
 
+
 	glPushMatrix();
 	GLfloat mat_diffuse[] = { 1.0f,1.0f,0.0f }; //material (gelb)
 	GLfloat mat_shininess[] = { 1.0f };
@@ -133,6 +134,7 @@ void endAnimation() {
 	glutSolidSphere(3.0f, 200, 160);
 	glPopMatrix();
 
+	//eyes
 	glPushMatrix();
 	GLfloat mat_diffuse2[] = { 1.0f,0.0f,0.0f }; //material (rot)
 	GLfloat mat_shininess2[] = { 1.0f };
@@ -155,6 +157,7 @@ void endAnimation() {
 	glutSolidSphere(0.5f, 200, 160);
 	glPopMatrix();
 
+	//licht
 	GLfloat light_position[] = { lightx, lighty, lightz, 0.0f };
 	GLfloat light_diffuse[] = { 1.0f, 1.0f, 1.0f, 0.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
@@ -163,13 +166,13 @@ void endAnimation() {
 	glEnable(GL_LIGHTING); //light aktivieren
 	glEnable(GL_LIGHT0); // licht nummer eins einschalten
 
+	//lichtberechnungen
 	lightx = cos(lightAngle) * 5;
 	lightz = sin(lightAngle) * 5;
 
 	lightAngle += 0.05;
 
 	if (lightAngle >= 18.0f) {
-		std::cout << "Hello";
 		glutDestroyWindow(window);
 		exit(0);
 	}
@@ -199,6 +202,7 @@ void display()
 void init(int width, int height)
 {
 	if (!ende) {
+		//light
 		GLfloat mat_diffuse[] = { 1.0f,1.0f,0.0f }; //material (gelb)
 		GLfloat mat_shininess[] = { 1.0f };
 		glMaterialfv(GL_FRONT, GL_SPECULAR, mat_diffuse);
