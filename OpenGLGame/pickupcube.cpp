@@ -12,7 +12,8 @@ PickupCube::~PickupCube()
 
 void PickupCube::createMesh()
 {
-	glColor3f(1.0f, 1.0f, 1.0f);
+	glPushMatrix();
+	glColor3f(0.9f, 0.9f, 0.9f);
 
 	glBegin(GL_QUADS);
 
@@ -79,6 +80,7 @@ void PickupCube::createMesh()
 	}
 
 	glEnd();
+	glPopMatrix();
 }
 
 
