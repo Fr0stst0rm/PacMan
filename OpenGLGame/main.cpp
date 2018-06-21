@@ -16,7 +16,7 @@
 #include "pickupcube.h"
 #include "defines.h"
 
-#define PLAYTHEME false
+#define PLAYTHEME true
 
 void endAnimation();
 void exitMain();
@@ -96,6 +96,7 @@ void keyPressed(unsigned char key, int x, int y)
 		if (ende) {
 			exitMain();
 		}
+		PlaySound((LPCSTR)"gameover.wav", NULL, SND_FILENAME | SND_ASYNC);
 		ende = true;
 		break;
 	case 'w':
@@ -123,7 +124,7 @@ void keyPressed(unsigned char key, int x, int y)
 
 void endAnimation() {
 
-
+	
 	glPushMatrix();
 	GLfloat mat_diffuse[] = { 1.0f,1.0f,0.0f }; //material (gelb)
 	GLfloat mat_shininess[] = { 1.0f };
@@ -266,9 +267,9 @@ int main(int argc, char **argv)
 {
 	//hideConsole();
 
-	/*if (PLAYTHEME) {
+	if (PLAYTHEME) {
 		PlaySound((LPCSTR)"manpac.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-	}*/
+	}
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
