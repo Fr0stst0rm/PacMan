@@ -166,10 +166,10 @@ void endAnimation() {
 	lightx = cos(lightAngle) * 5;
 	lightz = sin(lightAngle) * 5;
 
-	lightAngle += 0.03;
+	lightAngle += 0.05;
 
-	if (lightAngle > 1080) {
-		lightAngle = 0;
+	if (lightAngle >= 18.0f) {
+		std::cout << "Hello";
 		glutDestroyWindow(window);
 		exit(0);
 	}
