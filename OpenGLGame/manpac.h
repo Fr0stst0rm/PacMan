@@ -23,6 +23,8 @@ protected:
 
 	void createMesh();
 
+	void setPos(float x, float y, float z);
+
 private:
 
 	int mouthMover = 15;
