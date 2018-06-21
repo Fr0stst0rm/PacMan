@@ -13,17 +13,19 @@ public:
 
 	void moveToNextTile(Direction dir);
 
-	float movementSpeed = 0.1f;
+	float movementSpeed = 0.05f;
 
 	bool isMoving = false;
 
 	void moveToNextPos();
 
+	float offset = 0.45f;
+
+	void setPos(float x, float y, float z);
+
 protected:
 
 	void createMesh();
-
-	void setPos(float x, float y, float z);
 
 private:
 
