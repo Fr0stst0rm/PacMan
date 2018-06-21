@@ -51,21 +51,22 @@ bool Map::checkNextDir(int x, int y, Direction dir)
 
 	switch (dir) {
 	case NORTH:
-		tempX++;
-		break;
-	case EAST:
 		tempY++;
 		break;
-	case SOUTH:
+	case EAST:
 		tempX--;
 		break;
-	case WEST:
+	case SOUTH:
 		tempY--;
+		break;
+	case WEST:
+		tempX++;
 		break;
 	}
 
 	if ((tempX >= 0) && (tempX < width) && (tempY >= 0) && (tempY < height)) {
-		if (map[xyToIndex((width-1) - x, (width - 1) - y, width)] == PATH) {
+		//std::cout << "X: " << tempX << " Y: " << tempY << " => " << (int)(map[xyToIndex(tempX, (height - 1) - tempY, width)]);
+		if (map[xyToIndex(tempX, (height - 1) - tempY, width)] == PATH) {
 			return true;
 		}
 	}

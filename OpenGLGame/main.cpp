@@ -12,7 +12,8 @@
 #include "map.h"
 #include "wall.h"
 #include "level1.h"
-
+#include "pickupcube.h"
+#include "defines.h"
 
 #define PLAYTHEME false
 
@@ -34,6 +35,11 @@ int zoom = -27;
 
 Map * map;
 ManPac * manPac;
+
+// ###################################################
+// DELETE TEST VARIABLES
+PickupCube * testCube;
+// ###################################################
 
 void reportGLError(const char * msg)
 {
@@ -65,9 +71,15 @@ void specialKeyPressed(int key, int x, int y)
 	{
 	case GLUT_KEY_UP:
 		moveUp();
+		//manPac->offset += 0.01f;
+		//manPac->setPos(1,1, map->getZoom());
+		//cout << "Offset " << manPac->offset;
 		break;
 	case GLUT_KEY_DOWN:
 		moveDown();
+		//manPac->offset -= 0.01f;
+		//manPac->setPos(1, 1, map->getZoom());
+		//cout << "Offset " << manPac->offset;
 		break;
 	case GLUT_KEY_LEFT:
 		moveLeft();
@@ -97,6 +109,14 @@ void keyPressed(unsigned char key, int x, int y)
 	case 'a':
 		moveRight();
 		break;
+	case 'l':
+		if (MODE_2D) {
+			MODE_2D = false;
+		}
+		else {
+			MODE_2D = true;
+		}
+		break;
 	}
 }
 
@@ -109,6 +129,7 @@ void display()
 
 	manPac->draw();
 	map->draw();
+	testCube->draw();
 
 	glutSwapBuffers();
 }
@@ -138,8 +159,13 @@ void init(int width, int height)
 	glShadeModel(GL_SMOOTH);
 
 	resize(width, height);
+<<<<<<< HEAD
 	
 
+=======
+
+	
+>>>>>>> 37461296890b22364fbebb91e9ce4b0f0473814c
 	map = new Map();
 	map->loadMap(Level1::width, Level1::height, (char *)Level1::map);
 	map->setPos(-Level1::width / 2.0f + 0.5f, -Level1::height / 2.0f + 0.5f, zoom);
@@ -147,6 +173,11 @@ void init(int width, int height)
 	manPac = new ManPac(1,1,map);
 	//manPac->setPos(-(map->getWidth() / 6.0f + (float)(1) * 1.5f), -(map->getHeight() / 7.0f + (float)(1) * 1.5f), map->getZoom());
 
+	// #########################################################
+	// TEST VARIABLES, DELETE LATER ON
+	testCube = new PickupCube(0, 0, map);
+	//testCube->setScale(0.9f);
+	// #########################################################
 }
 
 void timer(int value)
@@ -192,20 +223,24 @@ void exitMain() {
 
 void moveUp() {
 	manPac->moveToNextTile(NORTH);
+	manPac->setZRotation(-90);
 	//glutPostRedisplay();
 }
 
 void moveDown() {
 	manPac->moveToNextTile(SOUTH);
+	manPac->setZRotation(-90);
 	//glutPostRedisplay();
 }
 
 void moveLeft() {
 	manPac->moveToNextTile(EAST);
+	manPac->setZRotation(0);
 	//glutPostRedisplay();
 }
 
 void moveRight() {
 	manPac->moveToNextTile(WEST);
+	manPac->setZRotation(180);
 	//glutPostRedisplay();
 }

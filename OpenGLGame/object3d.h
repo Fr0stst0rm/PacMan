@@ -38,6 +38,8 @@ public:
 
 	void setScale(float size);
 
+	void setZRotation(float deg);
+
 protected:
 
 	float size = 1;
@@ -46,6 +48,7 @@ protected:
 
 private:
 
+	float rotationZ = 0;
 
 	GLuint texture;
 
