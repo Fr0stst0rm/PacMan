@@ -153,13 +153,7 @@ void init(int width, int height)
 	glShadeModel(GL_SMOOTH);
 
 	resize(width, height);
-<<<<<<< HEAD
-	
 
-=======
-
-	
->>>>>>> 37461296890b22364fbebb91e9ce4b0f0473814c
 	map = new Map();
 	map->loadMap(Level1::width, Level1::height, (char *)Level1::map);
 	map->setPos(-Level1::width / 2.0f + 0.5f, -Level1::height / 2.0f + 0.5f, zoom);
