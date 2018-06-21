@@ -8,7 +8,7 @@ ManPac::ManPac(int x, int y, Map * map) : map(map)
 	nextX = x;
 	nextY = y;
 
-	setPos(- (map->getWidth()/ 6.0f + (float)(x) * 1.5f), - (map->getHeight() / 7.0f + (float)(y) * 1.5f), map->getZoom());
+	setPos(x,y,map->getZoom());
 }
 
 void ManPac::moveToNextTile(Direction dir)
@@ -79,6 +79,11 @@ void ManPac::createMesh()
 	glEnd();
 }
 
+void ManPac::setPos(float x, float y, float z)
+{
+	Object3D::setPos(-(map->getWidth() / 2.0f) + (float)(x) * 1.0f + 0.4f, -(map->getHeight() / 2.0f) + (float)(y) * 1.0f + 0.4f, z);
+}
+
 void ManPac::moveToNextPos()
 {
 	if (isMoving) {
@@ -89,6 +94,8 @@ void ManPac::moveToNextPos()
 		if (abs(currentY) < abs(nextY)) {
 			currentY += movementSpeed;
 		}
+
+		setPos(currentX, currentY, map->getZoom());
 
 		if ((currentX == nextX) && (currentY == nextY)) {
 			std::cout << "X:" << currentX << " Y:" << currentY;

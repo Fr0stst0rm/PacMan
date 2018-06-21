@@ -143,9 +143,9 @@ int main(int argc, char **argv)
 {
 	//hideConsole();
 
-	if (PLAYTHEME) {
+	/*if (PLAYTHEME) {
 		PlaySound((LPCSTR)"manpac.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-	}
+	}*/
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
