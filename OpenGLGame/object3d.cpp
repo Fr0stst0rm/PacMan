@@ -59,13 +59,6 @@ void Object3D::setPos(float x, float y, float z)
 void Object3D::draw()
 {
 
-	glPushMatrix();
-
-	glTranslatef(0.0f, 0.0f, 0.0f);
-	glRotatef(rotationZ, 0.0f, 0.0f, 1.0f);
-
-	glPopMatrix();
-
 	glEnable(GL_TEXTURE_2D);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -75,12 +68,18 @@ void Object3D::draw()
 	//glTranslatef(0, y, 0);
 	//glTranslatef(0, 0, z);
 
-	glScalef(size, size, 1.0f);
-	//glPopMatrix();
+	
 
-	//glPushMatrix();
+	glScalef(size, size, 1.0f);
+
+	glPushMatrix();
+
+	glTranslatef(0.0f, 0.0f, 0.0f);
+	glRotatef(rotationZ, 0.0f, 0.0f, 1.0f);
 		
 	createMesh();	
+	
+	glPopMatrix();
 	
 	glPopMatrix();
 

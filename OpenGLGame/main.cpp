@@ -17,6 +17,7 @@
 
 #define PLAYTHEME false
 
+void endAnimation();
 void exitMain();
 void hideConsole();
 
@@ -71,15 +72,9 @@ void specialKeyPressed(int key, int x, int y)
 	{
 	case GLUT_KEY_UP:
 		moveUp();
-		//manPac->offset += 0.01f;
-		//manPac->setPos(1,1, map->getZoom());
-		//cout << "Offset " << manPac->offset;
 		break;
 	case GLUT_KEY_DOWN:
 		moveDown();
-		//manPac->offset -= 0.01f;
-		//manPac->setPos(1, 1, map->getZoom());
-		//cout << "Offset " << manPac->offset;
 		break;
 	case GLUT_KEY_LEFT:
 		moveLeft();
@@ -94,8 +89,10 @@ void keyPressed(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 27:
+		if (ende) {
+			exitMain();
+		}
 		ende = true;
-		
 		break;
 	case 'w':
 		moveUp();
@@ -171,7 +168,7 @@ void endAnimation() {
 	if (lightAngle >= 18.0f) {
 		std::cout << "Hello";
 		glutDestroyWindow(window);
-		exit(0);
+		exitMain();
 	}
 
 }
@@ -269,6 +266,7 @@ void hideConsole()
 void exitMain() {
 		delete map;
 		delete manPac;
+		exit(0);
 }
 
 void moveUp() {
