@@ -68,7 +68,7 @@ void Object3D::draw()
 	glTranslatef(0, y, 0);
 	glTranslatef(0, 0, z);
 
-	glScalef(size, size, size);
+	glScalef(size, size, 1.0f);
 	
 	createMesh();
 

@@ -3,6 +3,7 @@
 #define WALL_H 
 
 #include "object3d.h"
+#include "defines.h"
 
 class Wall : public Object3D
 {
