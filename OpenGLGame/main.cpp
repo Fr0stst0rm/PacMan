@@ -71,9 +71,15 @@ void specialKeyPressed(int key, int x, int y)
 	{
 	case GLUT_KEY_UP:
 		moveUp();
+		//manPac->offset += 0.01f;
+		//manPac->setPos(1,1, map->getZoom());
+		//cout << "Offset " << manPac->offset;
 		break;
 	case GLUT_KEY_DOWN:
 		moveDown();
+		//manPac->offset -= 0.01f;
+		//manPac->setPos(1, 1, map->getZoom());
+		//cout << "Offset " << manPac->offset;
 		break;
 	case GLUT_KEY_LEFT:
 		moveLeft();

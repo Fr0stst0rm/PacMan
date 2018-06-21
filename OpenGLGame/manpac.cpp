@@ -18,16 +18,16 @@ void ManPac::moveToNextTile(Direction dir)
 		if (!isMoving) {
 			switch (dir) {
 			case NORTH:
-				nextX++;
-				break;
-			case EAST:
 				nextY++;
 				break;
+			case EAST:
+				nextX++;
+				break;
 			case SOUTH:
-				nextX--;
+				nextY--;
 				break;
 			case WEST:
-				nextY--;
+				nextX--;
 				break;
 			}
 			isMoving = true;
@@ -81,7 +81,7 @@ void ManPac::createMesh()
 
 void ManPac::setPos(float x, float y, float z)
 {
-	Object3D::setPos(-(map->getWidth() / 2.0f) + (float)(x) * 1.0f + 0.4f, -(map->getHeight() / 2.0f) + (float)(y) * 1.0f + 0.4f, z);
+	Object3D::setPos(-(map->getWidth() / 2.0f) + (float)(x) * 1.0f + offset, -(map->getHeight() / 2.0f) + (float)(y) * 1.0f + offset, z);
 }
 
 void ManPac::moveToNextPos()
@@ -90,9 +90,15 @@ void ManPac::moveToNextPos()
 		if (abs(currentX) < abs(nextX)) {
 			currentX += movementSpeed;
 		}
+		else {
+			currentX = nextX;
+		}
 
 		if (abs(currentY) < abs(nextY)) {
 			currentY += movementSpeed;
+		}
+		else {
+			currentY = nextY;
 		}
 
 		setPos(currentX, currentY, map->getZoom());
