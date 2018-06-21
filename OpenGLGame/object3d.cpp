@@ -68,6 +68,8 @@ void Object3D::draw()
 	glTranslatef(0, y, 0);
 	glTranslatef(0, 0, z);
 
+	glScalef(size, size, size);
+	
 	createMesh();
 
 	glPopMatrix();
@@ -79,4 +81,9 @@ void Object3D::draw()
 GLuint Object3D::getTexture()
 {
 	return texture;
+}
+
+void Object3D::setScale(float size)
+{
+	this->size = size;
 }

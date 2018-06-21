@@ -11,8 +11,16 @@
 
 #include <iostream>
 #include <string>
+#include <math.h>
 
 #include "tga.h"
+
+/* some math.h files don't define pi...*/
+#ifndef M_PI
+#define M_PI 3.141592653
+#endif
+
+#define RAD(x) (((x)*M_PI)/180.)
 
 class Object3D
 {
@@ -28,11 +36,16 @@ public:
 
 	GLuint getTexture();
 
+	void setScale(float size);
+
 protected:
+
+	float size = 1;
 
 	virtual void createMesh() = 0;
 
 private:
+
 
 	GLuint texture;
 

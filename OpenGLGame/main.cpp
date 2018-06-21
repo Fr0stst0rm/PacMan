@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-#include <math.h>
 
 #include "manpac.h"
 #include "map.h"
@@ -17,23 +16,19 @@
 
 #define PLAYTHEME false
 
-void glutLeaveMainLoop();
+void exitMain();
 void hideConsole();
 
+void moveUp();
+void moveDown();
+void moveLeft();
+void moveRight();
+
 using namespace std;
-
-/* some math.h files don't define pi...*/
-#ifndef M_PI
-#define M_PI 3.141592653
-#endif
-
-#define RAD(x) (((x)*M_PI)/180.)
 
 int window;
 float moveManPacY = 0.0f;
 float moveManPacX = 0.0f;
-
-int animating = 1;
 
 int zoom = -27;
 
@@ -69,21 +64,17 @@ void specialKeyPressed(int key, int x, int y)
 	switch (key)
 	{
 	case GLUT_KEY_UP:
-		moveManPacY += 0.1f;
-		glutPostRedisplay();
+		moveUp();
 		break;
-
 	case GLUT_KEY_DOWN:
-		moveManPacY -= 0.1f;
-		glutPostRedisplay();
+		moveDown();
 		break;
-
 	case GLUT_KEY_LEFT:
-		moveManPacX -= 0.1f;
-		glutPostRedisplay();
+		moveLeft();
 		break;
 	case GLUT_KEY_RIGHT:
-		moveManPacX += 0.1f;
+		moveRight();
+		break;
 	}
 }
 
@@ -94,23 +85,31 @@ void keyPressed(unsigned char key, int x, int y)
 		glutDestroyWindow(window);
 		exit(0);
 		break;
-	case 'a':
-		animating = animating ? 0 : 1;
-		glutPostRedisplay();
+	case 'w':
+		moveUp();
 		break;
-	default:
+	case 's':
+		moveDown();
+		break;
+	case 'd':
+		moveLeft();
+		break;
+	case 'a':
+		moveRight();
 		break;
 	}
 }
 
 void display()
 {
+	manPac->moveToNextPos();
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
 	manPac->draw();
 	map->draw();
-	
+
 	glutSwapBuffers();
 }
 
@@ -126,11 +125,11 @@ void init(int width, int height)
 
 
 	map = new Map();
-	map->loadMap(Level1::width, Level1::height, (char *) Level1::map);
-	map->setPos(-Level1::width/2.0f + 0.5f, -Level1::height/2.0f+0.5f, zoom);
+	map->loadMap(Level1::width, Level1::height, (char *)Level1::map);
+	map->setPos(-Level1::width / 2.0f + 0.5f, -Level1::height / 2.0f + 0.5f, zoom);
 
-	manPac = new ManPac(map);
-	manPac->setPos(-Level1::width / 2.0f + 0.5f, -Level1::height / 2.0f + 0.5f, zoom);
+	manPac = new ManPac(1,1,map);
+	//manPac->setPos(-(map->getWidth() / 6.0f + (float)(1) * 1.5f), -(map->getHeight() / 7.0f + (float)(1) * 1.5f), map->getZoom());
 
 }
 
@@ -161,17 +160,36 @@ int main(int argc, char **argv)
 	glutTimerFunc(15, timer, 1);
 	//glutFullScreen();
 	glutMainLoop();
-	glutLeaveMainLoop();
+	exitMain();
 	return 0;
 }
 
 void hideConsole()
 {
-	::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+	ShowWindow(GetConsoleWindow(), SW_HIDE);
 }
 
-void glutLeaveMainLoop() {
-	cout << "Freeing memory";
+void exitMain() {
+		delete map;
+		delete manPac;
+}
 
-	delete map;
+void moveUp() {
+	manPac->moveToNextTile(NORTH);
+	//glutPostRedisplay();
+}
+
+void moveDown() {
+	manPac->moveToNextTile(SOUTH);
+	//glutPostRedisplay();
+}
+
+void moveLeft() {
+	manPac->moveToNextTile(EAST);
+	//glutPostRedisplay();
+}
+
+void moveRight() {
+	manPac->moveToNextTile(WEST);
+	//glutPostRedisplay();
 }
