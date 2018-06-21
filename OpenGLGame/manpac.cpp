@@ -116,6 +116,11 @@ void ManPac::setPos(float x, float y, float z)
 	Object3D::setPos(-(map->getWidth() / 2.0f) + (float)(x) * 1.0f + offset, -(map->getHeight() / 2.0f) + (float)(y) * 1.0f + offset, z);
 }
 
+void ManPac::resetPos()
+{
+	setPos(currentX, currentY,map->getZoom());
+}
+
 void ManPac::moveToNextPos()
 {
 	if (isMoving) {

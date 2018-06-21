@@ -25,6 +25,7 @@ public:
 
 	int score = 0;
 
+	void resetPos();
 
 protected:
 

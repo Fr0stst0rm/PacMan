@@ -43,19 +43,8 @@ int zoom = -27;
 Map * map = NULL;
 ManPac * manPac = NULL;
 
-int const win_width = 480;
-int const win_height = 640;
-
-void reportGLError(const char * msg)
-{
-	GLenum errCode;
-	const GLubyte *errString;
-	while ((errCode = glGetError()) != GL_NO_ERROR) {
-		errString = gluErrorString(errCode);
-		fprintf(stderr, "OpenGL Error: %s %s\n", msg, errString);
-	}
-	return;
-}
+int const win_width = 1280;
+int const win_height = 720;
 
 void resize(int width, int height)
 {
@@ -66,7 +55,7 @@ void resize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45.0f, (float)width / (float)height, 0.1f, 100.0f);
+	gluPerspective(45.0f, (float)width / (float)height, 0.1f, 500.0f);
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -113,9 +102,28 @@ void keyPressed(unsigned char key, int x, int y)
 	case 'l':
 		if (MODE_2D) {
 			MODE_2D = false;
+
+			zoom = -27;
+
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluPerspective(45.0f, (float)win_width / (float)win_height, 0.1f, 500.0f);
+			glMatrixMode(GL_MODELVIEW);
+			map->setPos(-Level1::width / 2.0f + 0.5f, -Level1::height / 2.0f + 0.5f, zoom);
+			manPac->resetPos();
 		}
 		else {
 			MODE_2D = true;
+
+			zoom = -250;
+
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluPerspective(5.0f, (float)win_width / (float)win_height, 0.1f, 500.0f);
+			glMatrixMode(GL_MODELVIEW);
+
+			map->setPos(-Level1::width / 2.0f + 0.5f, -Level1::height / 2.0f + 0.5f, zoom);
+			manPac->resetPos();
 		}
 		break;
 	}
@@ -222,6 +230,7 @@ void display()
 
 void init(int width, int height)
 {
+
 	if (!ende) {
 		//GLfloat mat_diffuse[] = { 1.0f,1.0f,0.0f }; //material (gelb)
 		//GLfloat mat_shininess[] = { 1.0f };
@@ -266,13 +275,13 @@ int main(int argc, char **argv)
 {
 	//hideConsole();
 
-	/*if (PLAYTHEME) {
-		PlaySound((LPCSTR)"manpac.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-	}*/
+	if (PLAYTHEME) {
+		PlaySound(L"manpac.wav", NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+	}
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
-	glutInitWindowSize(640, 480);
+	glutInitWindowSize(1280, 720);
 	glutInitWindowPosition(0, 0);
 	window = glutCreateWindow("MacPan");
 	glutDisplayFunc(&display);
@@ -281,7 +290,7 @@ int main(int argc, char **argv)
 	glutSpecialFunc(&specialKeyPressed);
 	init(win_height, win_width);
 	glutTimerFunc(15, timer, 1);
-	//glutFullScreen();
+	glutFullScreen();
 	glutMainLoop();
 	exitMain();
 	return 0;
