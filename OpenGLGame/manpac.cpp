@@ -5,10 +5,13 @@ ManPac::ManPac(int x, int y, Map * map) : map(map)
 	currentX = x;
 	currentY = y;
 
-	nextX = x;
-	nextY = y;
+	oldX = x;
+	oldY = y;
 
-	setPos(x,y,map->getZoom());
+	nextX = 0;
+	nextY = 0;
+
+	setPos(x, y, map->getZoom());
 }
 
 void ManPac::moveToNextTile(Direction dir)
@@ -18,18 +21,20 @@ void ManPac::moveToNextTile(Direction dir)
 		if (!isMoving) {
 			switch (dir) {
 			case NORTH:
-				nextY++;
+				nextY = 1;
 				break;
 			case EAST:
-				nextX++;
+				nextX = 1;
 				break;
 			case SOUTH:
-				nextY--;
+				nextY = -1;
 				break;
 			case WEST:
-				nextX--;
+				nextX = -1;
 				break;
 			}
+			oldX = currentX;
+			oldY = currentY;
 			isMoving = true;
 		}
 	}
@@ -87,23 +92,51 @@ void ManPac::setPos(float x, float y, float z)
 void ManPac::moveToNextPos()
 {
 	if (isMoving) {
-		if (abs(currentX) < abs(nextX)) {
-			currentX += movementSpeed;
+
+		if (nextX > 0) {
+
+			if (currentX < (oldX + nextX)) {
+				currentX += movementSpeed;
+			}
+			else {
+				currentX = oldX + nextX;
+			}
 		}
-		else {
-			currentX = nextX;
+		else if (nextX < 0) {
+			if (currentX > (oldX + nextX)) {
+				currentX -= movementSpeed;
+			}
+			else {
+				currentX = oldX + nextX;
+			}
 		}
 
-		if (abs(currentY) < abs(nextY)) {
-			currentY += movementSpeed;
+
+		if (nextY > 0) {
+
+			if (currentY < (oldY + nextY)) {
+				currentY += movementSpeed;
+			}
+			else {
+				currentY = oldY + nextY;
+			}
 		}
-		else {
-			currentY = nextY;
+		else if (nextY < 0) {
+			if (currentY >(oldY + nextY)) {
+				currentY -= movementSpeed;
+			}
+			else {
+				currentY = oldY + nextY;
+			}
 		}
 
 		setPos(currentX, currentY, map->getZoom());
 
-		if ((currentX == nextX) && (currentY == nextY)) {
+		if ((currentX == (oldX + nextX)) && (currentY == (oldY + nextY))) {
+			nextX = 0;
+			nextY = 0;
+			oldX = currentX;
+			oldY = currentY;
 			std::cout << "X:" << currentX << " Y:" << currentY;
 			isMoving = false;
 		}

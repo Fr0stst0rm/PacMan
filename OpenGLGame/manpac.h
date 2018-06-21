@@ -41,6 +41,9 @@ private:
 	float currentX = 0;
 	float currentY = 0;
 
+	float oldX = 0;
+	float oldY = 0;
+
 	Direction currentDir = NORTH;
 
 };
