@@ -18,6 +18,7 @@
 
 #define PLAYTHEME false
 
+void endAnimation();
 void exitMain();
 void hideConsole();
 
@@ -75,15 +76,9 @@ void specialKeyPressed(int key, int x, int y)
 	{
 	case GLUT_KEY_UP:
 		moveUp();
-		//manPac->offset += 0.01f;
-		//manPac->setPos(1,1, map->getZoom());
-		//cout << "Offset " << manPac->offset;
 		break;
 	case GLUT_KEY_DOWN:
 		moveDown();
-		//manPac->offset -= 0.01f;
-		//manPac->setPos(1, 1, map->getZoom());
-		//cout << "Offset " << manPac->offset;
 		break;
 	case GLUT_KEY_LEFT:
 		moveLeft();
@@ -98,8 +93,10 @@ void keyPressed(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 27:
-		ende = true; //starts endAnimation
-		
+		if (ende) {
+			exitMain();
+		}
+		ende = true;
 		break;
 	case 'w':
 		moveUp();
@@ -107,10 +104,10 @@ void keyPressed(unsigned char key, int x, int y)
 	case 's':
 		moveDown();
 		break;
-	case 'd':
+	case 'a':
 		moveLeft();
 		break;
-	case 'a':
+	case 'd':
 		moveRight();
 		break;
 	case 'l':
@@ -178,7 +175,7 @@ void endAnimation() {
 
 	if (lightAngle >= 18.0f) {
 		glutDestroyWindow(window);
-		exit(0);
+		exitMain();
 	}
 
 }
@@ -252,10 +249,11 @@ void init(int width, int height)
 
 	map = new Map();
 	map->loadMap(Level1::width, Level1::height, (char *)Level1::map);
+
+	//Set map to center of screen
 	map->setPos(-Level1::width / 2.0f + 0.5f, -Level1::height / 2.0f + 0.5f, zoom);
 
-	manPac = new ManPac(1,1,map);
-	//manPac->setPos(-(map->getWidth() / 6.0f + (float)(1) * 1.5f), -(map->getHeight() / 7.0f + (float)(1) * 1.5f), map->getZoom());
+	manPac = new ManPac(9,9,map);
 }
 
 void timer(int value)
@@ -297,29 +295,26 @@ void hideConsole()
 void exitMain() {
 		delete map;
 		delete manPac;
+		exit(0);
 }
 
 void moveUp() {
 	manPac->moveToNextTile(NORTH);
-	manPac->setZRotation(-90);
-	//glutPostRedisplay();
+	manPac->setZRotation(90);
 }
 
 void moveDown() {
 	manPac->moveToNextTile(SOUTH);
 	manPac->setZRotation(-90);
-	//glutPostRedisplay();
 }
 
 void moveLeft() {
 	manPac->moveToNextTile(EAST);
-	manPac->setZRotation(0);
-	//glutPostRedisplay();
+	manPac->setZRotation(180);
 }
 
 void moveRight() {
 	manPac->moveToNextTile(WEST);
-	manPac->setZRotation(180);
-	//glutPostRedisplay();
+	manPac->setZRotation(0);
 }
 

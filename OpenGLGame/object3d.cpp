@@ -64,19 +64,23 @@ void Object3D::draw()
 	glBindTexture(GL_TEXTURE_2D, texture);
 
 	glPushMatrix();
-	glTranslatef(x, 0, 0);
-	glTranslatef(0, y, 0);
-	glTranslatef(0, 0, z);
+	glTranslatef(x, y, z);
+	//glTranslatef(0, y, 0);
+	//glTranslatef(0, 0, z);
+
+	
 
 	glScalef(size, size, 1.0f);
-	
+
 	glPushMatrix();
+
 	glTranslatef(0.0f, 0.0f, 0.0f);
 	glRotatef(rotationZ, 0.0f, 0.0f, 1.0f);
+		
+	createMesh();	
+	
 	glPopMatrix();
-
-	createMesh();
-
+	
 	glPopMatrix();
 
 	glDisable(GL_TEXTURE_2D);
@@ -95,5 +99,5 @@ void Object3D::setScale(float size)
 
 void Object3D::setZRotation(float deg)
 {
-	this->rotationZ = RAD(deg);
+	this->rotationZ = deg;
 }

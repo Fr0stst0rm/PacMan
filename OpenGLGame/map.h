@@ -2,11 +2,12 @@
 #ifndef _MAP_H
 #define _MAP_H
 
+#include "portal.h"
 #include "pickupcube.h"
 #include "wall.h"
 #include <stdio.h>
 
-#define xyToIndex(x,y, maxX) ( (y * maxX) + x)
+#define xyToIndex(x,y, maxX) ( ((y) * (maxX)) + (x))
 
 enum Direction
 {
@@ -50,6 +51,7 @@ private:
 
 	Wall ** walls;
 	PickupCube ** pickupCubes;
+	Portal ** portals;
 
 	char height = 0;
 	char width = 0;
