@@ -31,6 +31,11 @@ int window;
 float moveManPacY = 0.0f;
 float moveManPacX = 0.0f;
 
+float lightx = 5.0f, lighty = 5.0f, lightz = 3.0f;
+float lightAngle = 0.0f;
+
+bool ende = false;
+
 int zoom = -27;
 
 Map * map;
@@ -89,8 +94,8 @@ void keyPressed(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 27:
-		glutDestroyWindow(window);
-		exit(0);
+		ende = true;
+		
 		break;
 	case 'w':
 		moveUp();
@@ -115,28 +120,42 @@ void keyPressed(unsigned char key, int x, int y)
 	}
 }
 
-void display()
-{
-	manPac->moveToNextPos();
+void endAnimation() {
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-
-	manPac->draw();
-	map->draw();
-
-	glutSwapBuffers();
-}
-
-void init(int width, int height)
-{
-	
+	glPushMatrix();
 	GLfloat mat_diffuse[] = { 1.0f,1.0f,0.0f }; //material (gelb)
 	GLfloat mat_shininess[] = { 1.0f };
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_diffuse);
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-	
-	GLfloat light_position[] = { 10.0f, 10.0f, 0.1f, 0.0f };
+
+	glColor3f(1.0f, 1.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, -20.0f);
+	glutSolidSphere(3.0f, 200, 160);
+	glPopMatrix();
+
+	glPushMatrix();
+	GLfloat mat_diffuse2[] = { 1.0f,0.0f,0.0f }; //material (rot)
+	GLfloat mat_shininess2[] = { 1.0f };
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_diffuse2);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glTranslatef(-1.25f, 1.25f, -17.5f);
+	glutSolidSphere(0.5f, 200, 160);
+	glPopMatrix();
+
+	glPushMatrix();
+	GLfloat mat_diffuse3[] = { 1.0f,0.0f,0.0f }; //material (rot)
+	GLfloat mat_shininess3[] = { 1.0f };
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_diffuse3);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glTranslatef(1.25f, 1.25f, -17.5f);
+	glutSolidSphere(0.5f, 200, 160);
+	glPopMatrix();
+
+	GLfloat light_position[] = { lightx, lighty, lightz, 0.0f };
 	GLfloat light_diffuse[] = { 1.0f, 1.0f, 1.0f, 0.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
@@ -144,6 +163,55 @@ void init(int width, int height)
 	glEnable(GL_LIGHTING); //light aktivieren
 	glEnable(GL_LIGHT0); // licht nummer eins einschalten
 
+	lightx = cos(lightAngle) * 5;
+	lightz = sin(lightAngle) * 5;
+
+	lightAngle += 0.03;
+
+	if (lightAngle > 1080) {
+		lightAngle = 0;
+		glutDestroyWindow(window);
+		exit(0);
+	}
+
+}
+
+void display()
+{
+	if (!ende) { manPac->moveToNextPos(); }
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+
+	if (ende) {
+		endAnimation();
+	}
+	else {
+		manPac->draw();
+		map->draw();
+	}
+
+	
+
+	glutSwapBuffers();
+}
+
+void init(int width, int height)
+{
+	if (!ende) {
+		GLfloat mat_diffuse[] = { 1.0f,1.0f,0.0f }; //material (gelb)
+		GLfloat mat_shininess[] = { 1.0f };
+		glMaterialfv(GL_FRONT, GL_SPECULAR, mat_diffuse);
+		glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+
+		GLfloat light_position[] = { 10.0f, 10.0f, 0.1f, 0.0f };
+		GLfloat light_diffuse[] = { 1.0f, 1.0f, 1.0f, 0.0f };
+		glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+
+		glEnable(GL_LIGHTING); //light aktivieren
+		glEnable(GL_LIGHT0); // licht nummer eins einschalten
+	}
 
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -226,3 +294,4 @@ void moveRight() {
 	manPac->setZRotation(180);
 	//glutPostRedisplay();
 }
+
