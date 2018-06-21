@@ -5,6 +5,7 @@
 
 #include "object3d.h"
 #include "map.h"
+#include "defines.h"
 
 class PickupCube : public Object3D
 {
