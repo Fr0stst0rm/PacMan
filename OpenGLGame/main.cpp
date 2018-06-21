@@ -103,10 +103,10 @@ void keyPressed(unsigned char key, int x, int y)
 	case 's':
 		moveDown();
 		break;
-	case 'd':
+	case 'a':
 		moveLeft();
 		break;
-	case 'a':
+	case 'd':
 		moveRight();
 		break;
 	case 'l':
@@ -208,7 +208,7 @@ void moveUp() {
 
 void moveDown() {
 	manPac->moveToNextTile(SOUTH);
-	manPac->setZRotation(-90);
+	manPac->setZRotation(90);
 	//glutPostRedisplay();
 }
 
