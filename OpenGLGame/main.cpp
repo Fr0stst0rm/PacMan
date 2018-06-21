@@ -3,6 +3,7 @@
 #include <GL/glut.h> 
 #include <GL/gl.h>  
 #include <GL/glu.h>  
+#include <GL/freeglut.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -187,11 +188,15 @@ void display()
 		endAnimation();
 	}
 	else {
-		manPac->draw();
 		map->draw();
+		manPac->draw();
+		
 	}
 
-	
+	//glRasterPos2i(200, 100);
+	//glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+	//glScalef(0.005, 0.005, 1);
+	//glutStrokeString(GLUT_STROKE_ROMAN, (unsigned char*)"The game over!");
 
 	glutSwapBuffers();
 }
@@ -199,18 +204,18 @@ void display()
 void init(int width, int height)
 {
 	if (!ende) {
-		GLfloat mat_diffuse[] = { 1.0f,1.0f,0.0f }; //material (gelb)
-		GLfloat mat_shininess[] = { 1.0f };
-		glMaterialfv(GL_FRONT, GL_SPECULAR, mat_diffuse);
-		glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+		//GLfloat mat_diffuse[] = { 1.0f,1.0f,0.0f }; //material (gelb)
+		//GLfloat mat_shininess[] = { 1.0f };
+		//glMaterialfv(GL_FRONT, GL_SPECULAR, mat_diffuse);
+		//glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 
-		GLfloat light_position[] = { 10.0f, 10.0f, 0.1f, 0.0f };
-		GLfloat light_diffuse[] = { 1.0f, 1.0f, 1.0f, 0.0f };
-		glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-		glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+		//GLfloat light_position[] = { 10.0f, 10.0f, 0.1f, 0.0f };
+		//GLfloat light_diffuse[] = { 1.0f, 1.0f, 1.0f, 0.0f };
+		//glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+		//glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
 
-		glEnable(GL_LIGHTING); //light aktivieren
-		glEnable(GL_LIGHT0); // licht nummer eins einschalten
+		//glEnable(GL_LIGHTING); //light aktivieren
+		//glEnable(GL_LIGHT0); // licht nummer eins einschalten
 	}
 
 
@@ -255,7 +260,7 @@ int main(int argc, char **argv)
 	glutSpecialFunc(&specialKeyPressed);
 	init(640, 480);
 	glutTimerFunc(15, timer, 1);
-	//glutFullScreen();
+	glutFullScreen();
 	glutMainLoop();
 	exitMain();
 	return 0;

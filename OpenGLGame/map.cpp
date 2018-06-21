@@ -43,7 +43,7 @@ void Map::loadMap(char width, char height, char * map)
 			if (map[xyToIndex(x, y, width)] == PILL) {
 				pickupCubes[xyToIndex(x, y, width)] = new PickupCube();
 				pickupCubes[xyToIndex(x, y, width)]->setPos(x + this->x, (height - 1) - (y + this->y), this->z);
-				pickupCubes[xyToIndex(x, y, width)]->setTexture("wall.tga");
+				
 			}
 			else {
 				pickupCubes[xyToIndex(x, y, width)] = NULL;
@@ -92,6 +92,11 @@ void Map::draw()
 				walls[xyToIndex(x, y, width)]->setScale(size);
 				walls[xyToIndex(x, y, width)]->setPos(x + this->x, (height - 1) - (y + this->y), this->z);
 				walls[xyToIndex(x, y, width)]->draw();
+			}
+
+			if (map[xyToIndex(x, y, width)] == PILL) {
+				pickupCubes[xyToIndex(x, y, width)]->setPos(x + this->x, (height - 1) - (y + this->y), this->z);
+				pickupCubes[xyToIndex(x, y, width)]->draw();
 			}
 		}
 	}
