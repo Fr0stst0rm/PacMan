@@ -65,7 +65,7 @@ bool Map::checkNextDir(int x, int y, Direction dir)
 	}
 
 	if ((tempX >= 0) && (tempX < width) && (tempY >= 0) && (tempY < height)) {
-		if (map[xyToIndex(x, y, width)] == PATH) {
+		if (map[xyToIndex((width-1) - x, (width - 1) - y, width)] == PATH) {
 			return true;
 		}
 	}
