@@ -9,7 +9,7 @@
 class ManPac : public Object3D
 {
 public:
-	ManPac(Map map);
+	ManPac(Map * map);
 
 	void moveToNextTile(Direction dir);
 
@@ -19,7 +19,7 @@ protected:
 
 private:
 
-	Map map;
+	Map * map;
 
 	float x = 0;
 	float y = 0;
