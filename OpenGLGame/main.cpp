@@ -13,7 +13,7 @@
 #include "wall.h"
 #include "level1.h"
 #include "pickupcube.h"
-
+#include "defines.h"
 
 #define PLAYTHEME false
 
@@ -102,6 +102,14 @@ void keyPressed(unsigned char key, int x, int y)
 		break;
 	case 'a':
 		moveRight();
+		break;
+	case 'l':
+		if (MODE_2D) {
+			MODE_2D = false;
+		}
+		else {
+			MODE_2D = true;
+		}
 		break;
 	}
 }
