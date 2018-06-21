@@ -52,14 +52,14 @@ private:
 	float size = 0.5f;
 	float x, y, z;
 
-	Wall ** walls;
-	PickupCube ** pickupCubes;
-	Portal ** portals;
+	Wall ** walls = NULL;
+	PickupCube ** pickupCubes = NULL;
+	Portal ** portals = NULL;
 
 	char height = 0;
 	char width = 0;
 
-	char * map;
+	char * map = NULL;
 };
 
 #endif // !_MAP_H

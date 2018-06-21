@@ -40,8 +40,8 @@ bool ende = false;
 
 int zoom = -27;
 
-Map * map;
-ManPac * manPac;
+Map * map = NULL;
+ManPac * manPac = NULL;
 
 int const win_width = 480;
 int const win_height = 640;

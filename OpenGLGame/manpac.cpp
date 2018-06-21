@@ -98,12 +98,16 @@ void ManPac::checkPortal()
 {
 	Portal * p;
 	if ((p = map->getPortal(currentX, currentY)) != NULL) {
-		currentX = p->counterpart->x;
-		currentY = p->counterpart->y;
-		oldX = currentX;
-		oldY = currentY;
+		if ((p = p->counterpart) != NULL) {
+			currentX = p->x;
+			currentY = p->y;
+			oldX = currentX;
+			oldY = currentY;
 
-		setPos(currentX, currentY, map->getZoom());
+			std::cout << "Setting to X: " << currentX << " Y: " << currentY << "\n";
+
+			setPos(currentX, currentY, map->getZoom());
+		}
 	}
 }
 

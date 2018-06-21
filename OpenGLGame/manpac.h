@@ -13,7 +13,7 @@ public:
 
 	void moveToNextTile(Direction dir);
 
-	float movementSpeed = 0.05f;
+	float movementSpeed = 0.075f;
 
 	bool isMoving = false;
 
@@ -35,7 +35,7 @@ private:
 
 	GLfloat manPacRadius = 0.4f;
 
-	Map * map;
+	Map * map = NULL;
 
 	float nextX = 0;
 	float nextY = 0;

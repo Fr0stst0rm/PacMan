@@ -62,7 +62,7 @@ void Map::loadMap(char width, char height, char * map)
 				pickupCubes[xyToIndex(x, y, width)]->setPos(x + this->x, (height - 1) - (y + this->y), this->z);
 				break;
 			case PORTAL:
-				portals[xyToIndex(x, y, width)] = new Portal(x, y);
+				portals[xyToIndex(x, y, width)] = new Portal(x, (height - 1) - y);
 
 				if (portal1 == NULL) {
 					portal1 = portals[xyToIndex(x, y, width)];
@@ -70,7 +70,8 @@ void Map::loadMap(char width, char height, char * map)
 				else if (portal2 == NULL) {
 					portal2 = portals[xyToIndex(x, y, width)];
 				}
-				else {
+
+				if ((portal1 != NULL) && (portal2 != NULL)) {
 					portal1->counterpart = portal2;
 					portal2->counterpart = portal1;
 
