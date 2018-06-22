@@ -164,6 +164,7 @@ void ManPac::moveToNextPos()
 
 		setPos(currentX, currentY, map->getZoom());
 
+		// Wenn neues Tile erreicht ist auf Portal & Pill prüfen
 		if ((currentX == (oldX + nextX)) && (currentY == (oldY + nextY))) {
 			nextX = 0;
 			nextY = 0;

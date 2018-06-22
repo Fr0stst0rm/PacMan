@@ -7,8 +7,10 @@
 #include "wall.h"
 #include <stdio.h>
 
+// Konvertiert x, y zu arrayindex
 #define xyToIndex(x,y, maxX) ( ((y) * (maxX)) + (x))
 
+//Himmelsrichtingen 
 enum Direction
 {
 	NORTH,
@@ -17,6 +19,7 @@ enum Direction
 	WEST
 };
 
+// Mögliche Tiles
 enum MapTiles
 {
 	PATH = 0,
@@ -34,18 +37,25 @@ public:
 	char getHeight();
 	char getWidth();
 	
+	// Function to load new nevels
 	void loadMap(char width,  char height, char * map);
 
+	//Überprüft ob man in diese richtung gehen kann
 	bool checkNextDir(int x, int y, Direction dir);
 
+	//Zeichnet alle Walls
 	void draw();
 
 	void setPos(float x, float y, float z);
 
+	// Prüfen ob alle pills im level eingesammelt wurden
+	bool finished();
 
 	float getZoom();
 
 	Portal * getPortal(int x, int y);
+
+	//Pill aus der Map entfernen
 	PickupCube * eatPill(int x, int y);
 
 private:

@@ -13,12 +13,14 @@
 #include "map.h"
 #include "wall.h"
 #include "level1.h"
+#include "level2.h"
 #include "pickupcube.h"
 #include "defines.h"
 
 #define PLAYTHEME true
 
 void endAnimation();
+void endingGame();
 void exitMain();
 void hideConsole();
 
@@ -36,6 +38,7 @@ float moveManPacX = 0.0f;
 float lightx = 5.0f, lighty = 5.0f, lightz = 3.0f;
 float lightAngle = 0.0f;
 
+bool level2 = false;
 bool ende = false;
 
 int zoom = -27;
@@ -85,19 +88,8 @@ void keyPressed(unsigned char key, int x, int y)
 		if (ende) {
 			exitMain();
 		}
-		PlaySound(TEXT("gameover.wav"), NULL, SND_FILENAME | SND_ASYNC);
-		ende = true;
-
-		MODE_2D = false;
-
-		zoom = -27;
-
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluPerspective(45.0f, (float)win_width / (float)win_height, 0.1f, 500.0f);
-		glMatrixMode(GL_MODELVIEW);
-		map->setPos(-Level1::width / 2.0f + 0.5f, -Level1::height / 2.0f + 0.5f, zoom);
-		manPac->resetPos();
+		
+		endingGame();
 
 		break;
 	case 'w':
@@ -203,6 +195,14 @@ void endAnimation() {
 
 void display()
 {
+	if (map->finished() && !level2){
+		level2 = true;
+		map->loadMap(Level2::width, Level2::height, (char *)Level2::map);
+	}
+	else if (map->finished() && level2 && !ende) {
+		endingGame();
+	}
+
 	if (!ende) { manPac->moveToNextPos(); }
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -303,7 +303,7 @@ int main(int argc, char **argv)
 	glutSpecialFunc(&specialKeyPressed);
 	init(win_height, win_width);
 	glutTimerFunc(15, timer, 1);
-	glutFullScreen();
+	//glutFullScreen();
 	glutMainLoop();
 	exitMain();
 	return 0;
@@ -340,3 +340,18 @@ void moveRight() {
 	manPac->setZRotation(0);
 }
 
+void endingGame() {
+	PlaySound(TEXT("gameover.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	ende = true;
+
+	MODE_2D = false;
+
+	zoom = -27;
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0f, (float)win_width / (float)win_height, 0.1f, 500.0f);
+	glMatrixMode(GL_MODELVIEW);
+	map->setPos(-Level1::width / 2.0f + 0.5f, -Level1::height / 2.0f + 0.5f, zoom);
+	manPac->resetPos();
+}

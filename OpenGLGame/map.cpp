@@ -148,6 +148,16 @@ void Map::setPos(float x, float y, float z)
 	this->z = z;
 }
 
+bool Map::finished()
+{
+	for (int i = 0; i < (width * height); i++) {
+		if (pickupCubes[i] != NULL) {
+			return false;
+		}
+	}
+	return true;
+}
+
 float Map::getZoom()
 {
 	return z;

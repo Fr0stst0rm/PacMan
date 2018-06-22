@@ -32,7 +32,8 @@ public:
 	void setTexture(std::string path);
 
 	void setPos(float x, float y, float z);
-
+	
+	//Function called by the glut display loop
 	void draw();
 
 	GLuint getTexture();
@@ -45,6 +46,7 @@ protected:
 
 	float size = 1;
 
+	// virtual function to override, to create the 3D mash
 	virtual void createMesh() = 0;
 
 private:

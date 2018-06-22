@@ -11,6 +11,7 @@ class ManPac : public Object3D
 public:
 	ManPac(int x, int y, Map * map);
 
+	//ManPac geht 1 Tile in die angegebene Richtung
 	void moveToNextTile(Direction dir);
 
 	float movementSpeed = 0.075f;
